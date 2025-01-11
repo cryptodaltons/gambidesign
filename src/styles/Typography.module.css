@@ -1,0 +1,48 @@
+.functional-12 {
+  @apply font-semibold text-white text-xs;
+}
+
+.functional-13 {
+  @apply font-semibold text-white text-[13px];
+}
+
+.functional-16 {
+  @apply font-semibold text-white text-[16px];
+}
+
+.informational-13 {
+  @apply font-semibold text-[#B1B9DE] text-[13px];
+}
+
+/* Separate classes for clickable text */
+.clickable-functional-12 {
+  @apply font-semibold text-white text-xs;
+}
+
+.clickable-functional-12:hover {
+  @apply underline;
+}
+
+.clickable-functional-13 {
+  @apply font-semibold text-white text-[13px];
+}
+
+.clickable-functional-13:hover {
+  @apply underline;
+}
+
+.clickable-functional-16 {
+  @apply font-semibold text-white text-[16px];
+}
+
+.clickable-functional-16:hover {
+  @apply underline;
+}
+
+.clickable-informational-13 {
+  @apply font-semibold text-[#B1B9DE] text-[13px];
+}
+
+.clickable-informational-13:hover {
+  @apply underline;
+}

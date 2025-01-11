@@ -1,0 +1,26 @@
+.navContainer {
+  @apply absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2;
+  @apply flex items-end gap-4;
+  @apply z-[90];
+}
+
+.arrowBtn {
+  @apply text-white transition-opacity px-[0.97rem] py-[0.7rem];
+  @apply bg-gradient-to-t from-[#1b2455]/75 to-[#dcd8ff]/5;
+  @apply rounded-md;
+}
+
+.dotsContainer {
+  @apply flex gap-2;
+}
+
+.dot {
+  @apply mb-[0.3rem];
+  @apply w-2 h-2 rounded-full;
+  @apply transition-colors duration-300;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.activeDot {
+  @apply bg-white;
+}

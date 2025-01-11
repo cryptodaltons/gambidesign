@@ -1,0 +1,120 @@
+.gitignore:
+  short: No description provided.
+  long: |
+    No description provided.
+
+eslint.config.js:
+  short: No description provided.
+  long: |
+    No description provided.
+
+index.html:
+  short: Some styles are applied here. We use the Poppins font.
+  long: |
+    No description provided.
+
+package.json:
+  short: No description provided.
+  long: |
+    No description provided.
+
+postcss.config.js:
+  short: No description provided.
+  long: |
+    No description provided.
+
+README.md:
+  short: No description provided.
+  long: |
+    No description provided.
+
+tailwind.config.js:
+  short: The project's color palette is defined here.
+  long: |
+    No description provided.
+
+tsconfig.app.json:
+  short: No description provided.
+  long: |
+    No description provided.
+
+tsconfig.json:
+  short: No description provided.
+  long: |
+    No description provided.
+
+tsconfig.node.json:
+  short: No description provided.
+  long: |
+    No description provided.
+
+vite.config.ts:
+  short: No description provided.
+  long: |
+    No description provided.
+
+public:
+  short: No description provided.
+  long: |
+    No description provided.
+
+src:
+  short: No description provided.
+  long: |
+    No description provided.
+
+src\App.css:
+  short: The project uses React + React Router Dom with Layouts.
+  long: |
+    No description provided.
+
+src\App.tsx:
+  short: No description provided.
+  long: |
+    No description provided.
+
+src\index.css:
+  short: No description provided.
+  long: |
+    No description provided.
+
+src\main.tsx:
+  short: No description provided.
+  long: |
+    No description provided.
+
+src\vite-env.d.ts:
+  short: No description provided.
+  long: |
+    No description provided.
+
+src\assets:
+  short: No description provided.
+  long: |
+    No description provided.
+
+src\components:
+  short: The components folder, follow the atomic principle.
+  long: |
+    No description provided.
+
+src\pages:
+  short: No description provided.
+  long: |
+    No description provided.
+
+src\pages\Main.layout.tsx:
+  short: Adds header and sidebar over all pages.
+  long: |
+    No description provided.
+
+src\pages\home:
+  short: No description provided.
+  long: |
+    No description provided.
+
+src\pages\home\Home.page.tsx:
+  short: This page lists the advantages of the website.
+  long: |
+    No description provided.
+

@@ -1,0 +1,9 @@
+/* 
+   This class sets up a responsive 12-column grid with a gap of 30px
+   and horizontal padding of 160px as "base" (large screens).
+   Adjust for smaller screens if you want to reduce padding on mobile.
+*/
+
+.gridContainer {
+  @apply grid grid-cols-12 gap-[30px] px-[100px] w-full box-border;
+}

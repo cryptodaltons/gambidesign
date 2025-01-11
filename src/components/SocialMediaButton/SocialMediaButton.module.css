@@ -1,0 +1,7 @@
+.socialMedia {
+  @apply bg-secondaryLighter text-white w-12 h-12  min-w-12 min-h-12 flex items-center justify-center rounded-md;
+}
+
+.socialMedia:hover {
+  @apply bg-secondary;
+}

@@ -1,0 +1,17 @@
+.container {
+  @apply rounded-xl p-3 px-0 text-white shadow-md flex items-center justify-between;
+  min-height: 200px;
+  min-width: 90px;
+  transform: skewX(-15deg);
+  overflow: hidden;
+  @apply bg-gradient-to-b from-[rgba(28,39,66,0.25)] to-[rgba(43,71,139,0.75)];
+  @apply from-20% to-[200%];
+  @apply justify-center;
+  transition: background-color 0.3s ease, filter 0.3s ease;
+}
+
+.container:hover {
+  @apply bg-gradient-to-b from-[rgba(28,39,66,0.25)] to-[rgba(43,71,139,0.75)];
+  filter: brightness(1.2); /* Lightens the overall container */
+  cursor: pointer;
+}

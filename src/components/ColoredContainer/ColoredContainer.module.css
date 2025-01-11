@@ -1,0 +1,16 @@
+.container {
+  @apply rounded-xl p-4 px-12 text-white shadow-md flex items-center justify-between;
+  min-height: 200px;
+}
+
+.orange {
+  @apply bg-gradient-to-b from-[rgba(234,67,53,0.10)] to-[rgba(251,140,5,0.45)];
+  @apply from-20% to-[200%];
+  border-bottom: solid 2px #ee7f2a6e;
+}
+
+.blue {
+  @apply bg-gradient-to-b from-[rgba(28,39,66,0.25)] to-[rgba(43,71,139,0.75)];
+  @apply from-20% to-[200%];
+  border-bottom: solid 2px #2a75ee6e;
+}

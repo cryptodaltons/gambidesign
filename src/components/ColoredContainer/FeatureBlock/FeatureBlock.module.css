@@ -1,0 +1,51 @@
+.featureBlock {
+  @apply grid grid-cols-[max-content,minmax(0,1fr)] items-center gap-x-2 justify-center rounded-[4px] p-2;
+  min-height: 67px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-bottom: solid 2px #2a75ee6e; /* Default to blue scheme */
+  @apply transition-all duration-200 ease-in-out cursor-pointer;
+}
+
+.featureBlock:hover {
+  @apply scale-[1.06] !important;
+}
+
+.blueBlock {
+  @apply bg-[rgba(83,104,154,0.25)] border-b-[#2a75ee6e];
+}
+
+.blueBlock:hover {
+  @apply bg-[rgba(83,104,154,0.53)];
+}
+
+.orangeBlock {
+  @apply bg-[rgba(132,97,56,0.42)] border-b-[#9a77536e];
+}
+
+.orangeBlock:hover {
+  @apply bg-[rgba(132,97,56,0.73)];
+}
+
+.iconContainer {
+  @apply flex items-center justify-center w-[52px] h-[52px] rounded-[2px];
+}
+
+.blueIcon {
+  @apply bg-[rgba(83,104,154,0.55)];
+}
+
+.orangeIcon {
+  @apply bg-[rgba(154,119,83,0.55)];
+}
+
+.icon {
+  @apply w-8 h-8;
+}
+
+.label {
+  @apply text-white text-center font-normal select-none;
+}
+
+.content {
+  @apply ml-4 text-white flex-1;
+}

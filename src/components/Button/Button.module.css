@@ -1,0 +1,15 @@
+.button {
+  @apply bg-attention text-white px-5 h-11 rounded font-semibold transition-colors duration-100 flex items-center justify-center min-w-[90px];
+}
+
+.button:hover {
+  @apply bg-attentionDarker;
+}
+
+.secondary {
+  @apply bg-secondary text-white h-11 flex items-center justify-center min-w-[90px];
+}
+
+.secondary:hover {
+  @apply bg-primary;
+}

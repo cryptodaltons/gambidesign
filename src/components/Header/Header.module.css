@@ -1,0 +1,11 @@
+.header {
+  @apply bg-secondary text-white pr-[100px] py-4 h-[60px] flex justify-between;
+}
+
+.nav {
+  @apply flex items-center gap-4;
+}
+
+.signIn {
+  @apply text-white underline hover:text-attention transition-colors;
+}
