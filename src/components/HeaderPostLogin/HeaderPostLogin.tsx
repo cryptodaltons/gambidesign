@@ -5,55 +5,59 @@ import { useSidebarContext } from '../../context/SidebarContext/useSidebarContex
 import headerStyles from './HeaderPostLogin.module.css';
 
 interface PostRegisterHeaderProps {
-  toggleChat: () => void;
+    toggleChat: () => void;
+    isChatOpen: boolean;
 }
 
-export const PostRegisterHeader: React.FC<PostRegisterHeaderProps> = ({ toggleChat }) => {
-  const { isOpen } = useSidebarContext();
+export const PostRegisterHeader: React.FC<PostRegisterHeaderProps> = ({ toggleChat, isChatOpen }) => {
+    const { isOpen } = useSidebarContext();
 
-  return (
-    <header
-      className={`${headerStyles.header} ${
-        isOpen ? headerStyles.sidebarOpen : headerStyles.sidebarClosed
-      }`}
-    >
-      <div className={headerStyles.headerContainer}>
-        <div className={headerStyles.leftSection} />
-        <div className={headerStyles.midSection}>
-          <div className={headerStyles.logoLeft}>
-            <Logo />
-          </div>
-          <div className={headerStyles.walletCenter}>
-            <Wallet />
-          </div>
-          <div className={headerStyles.iconsContainer}>
-            <button
-              className={headerStyles.iconButton}
-              onClick={() => console.log('Notifications clicked')}
-              aria-label="Notifications"
-            >
-              <img src="/images/bellVector.svg" alt="Notifications" className={headerStyles.icon} />
-            </button>
+    return (
+        <header
+            className={`${headerStyles.header} ${
+                isOpen ? headerStyles.sidebarOpen : headerStyles.sidebarClosed
+            } ${isChatOpen ? 'mr-[250px]' : ''}`}
+        >
+            <div className={headerStyles.headerContainer}>
+                <div className={headerStyles.leftSection} />
+                <div className={headerStyles.midSection}>
+                    <div className={headerStyles.logoLeft}>
+                        <Logo />
+                    </div>
+                    <div className={headerStyles.walletCenter}>
+                        <Wallet />
+                    </div>
+                    <div className={headerStyles.iconsContainer}>
+                        {/* Notification Icon (Back in Place) */}
+                        <button
+                            className={headerStyles.iconButton}
+                            onClick={() => console.log('Notifications clicked')}
+                            aria-label="Notifications"
+                        >
+                            <img src="/images/bellVector.svg" alt="Notifications" className={headerStyles.icon} />
+                        </button>
 
-            <button
-              className={headerStyles.iconButton}
-              onClick={() => console.log('Account clicked')}
-              aria-label="Account"
-            >
-              <img src="/images/userVector.svg" alt="Account" className={headerStyles.icon} />
-            </button>
+                        {/* Profile Icon (Back in Place) */}
+                        <button
+                            className={headerStyles.iconButton}
+                            onClick={() => console.log('Account clicked')}
+                            aria-label="Account"
+                        >
+                            <img src="/images/userVector.svg" alt="Account" className={headerStyles.icon} />
+                        </button>
 
-            <button
-              className={headerStyles.iconButton}
-              onClick={toggleChat} // Toggle Chat Sidebar
-              aria-label="Chat"
-            >
-              <img src="/images/chatVector.svg" alt="Chat" className={headerStyles.icon} />
-            </button>
-          </div>
-        </div>
-        <div className={headerStyles.rightSection} />
-      </div>
-    </header>
-  );
+                        {/* Chat Toggle Button */}
+                        <button
+                            className={headerStyles.iconButton}
+                            onClick={toggleChat}
+                            aria-label="Chat"
+                        >
+                            <img src="/images/chatVector.svg" alt="Chat" className={headerStyles.icon} />
+                        </button>
+                    </div>
+                </div>
+                <div className={headerStyles.rightSection} />
+            </div>
+        </header>
+    );
 };

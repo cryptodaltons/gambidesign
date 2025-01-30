@@ -1,5 +1,7 @@
 .button {
   @apply bg-attention text-white px-5 h-11 rounded font-semibold transition-colors duration-100 flex items-center justify-center min-w-[90px];
+  position: relative; /* Ensures proper positioning */
+  margin: 10px; /* Default margin */
 }
 
 .button:hover {

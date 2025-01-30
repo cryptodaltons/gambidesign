@@ -1,84 +1,278 @@
-.sidebar {
-    position: fixed;
-    right: 0;
-    top: 0;
-    height: 100%;
-    width: 300px;
-    background: #121727;
-    color: white;
-    transition: transform 0.3s ease;
-    z-index: 1000;
-    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
+/* ChatSidebar.module.css */
+
+.chatSidebar {
+  position: fixed;
+  right: 0;
+  top: 70px; /* Adjust if needed */
+  height: calc(100% - 70px);
+  width: 300px;
+  background: #1a1f2d;
+  color: #d1d5db;
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Slide in/out effect */
+.open {
+  transform: translateX(0);
+}
+.closed {
+  transform: translateX(100%);
+}
+
+/* ------------------ TOP BAR (LANGUAGE, ETC.) ------------------ */
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #0f1625;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid #2c3442;
+}
+
+.languageContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.flagIcon {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+}
+
+.languageLabel {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.expandIcon,
+.popoutIcon,
+.closeIcon {
+  color: #a0a6b1;
+  font-size: 1.1rem;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  margin-left: 0.3rem;
+}
+
+/* Language dropdown (hidden until .active) */
+.dropdown {
+  position: absolute;
+  top: 50px; /* just below top bar */
+  left: 0;
+  width: 240px;
+  background: #ffffff;
+  color: #000000;
+  border-radius: 5px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  padding: 0.5rem 0;
+  display: none;
+}
+.dropdown.active {
+  display: block;
+}
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  gap: 0.5rem;
+}
+.dropdownItem:hover {
+  background: #f0f0f0;
+}
+.dropdownFlag {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+}
+
+/* ------------------ CHAT MESSAGE SCROLL AREA ------------------ */
+.chatMessages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  scrollbar-width: thin; /* for Firefox */
+  scroll-behavior: smooth;
+}
+
+/* Optional custom scrollbar for Chrome/Edge/Safari */
+.chatMessages::-webkit-scrollbar {
+  width: 6px;
+}
+.chatMessages::-webkit-scrollbar-track {
+  background: #2c3442;
+}
+.chatMessages::-webkit-scrollbar-thumb {
+  background: #444a5e;
+  border-radius: 3px;
+}
+
+/* ---------- MESSAGE BUBBLES ---------- */
+.chatMessage {
+  background: #252b3a;
+  padding: 8px 12px;
+  border-radius: 6px;
+  max-width: 75%;
+  font-size: 0.85rem;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.2s ease-in-out;
+  line-height: 1.3;
+  word-wrap: break-word;  /* ensures words wrap in older browsers */
+  overflow-wrap: break-word; /* modern property for wrapping long words */
+}
+.self {
+  background: #04a131; /* “You” messages */
+  align-self: flex-end;
+  color: #ffffff;
+}
+
+/* A separate header row for rank icon and username */
+.messageHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+/* The rank icon that appears before the username */
+.rankIcon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+  background-size: cover;
+  background-position: center;
+  /* Example: a star/shield icon */
+  background-image: url('https://cdn-icons-png.flaticon.com/512/1828/1828884.png');
+}
+
+/* Make the username clickable */
+.username {
+  font-weight: 500;
+  color: #ffffff;
+  margin-right: 4px;
+  cursor: pointer; /* indicates it's clickable */
+}
+
+.messageText {
+  white-space: pre-wrap;
+  /* This ensures multi-line text doesn't cause horizontal scroll */
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+}
+
+/* Fading animation for new messages */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
   }
-  
-  .open {
-    transform: translateX(0);
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .closed {
-    transform: translateX(100%);
-  }
-  
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
-    background: #192132;
-    border-bottom: 1px solid #2c3442;
-  }
-  
-  .title {
-    font-size: 1.2rem;
-    margin: 0;
-  }
-  
-  .messages {
-    flex: 1;
-    overflow-y: auto;
-    padding: 1rem;
-  }
-  
-  .message {
-    margin-bottom: 0.5rem;
-    padding: 0.5rem;
-    background: #1c2431;
-    border-radius: 8px;
-  }
-  
-  .noMessages {
-    text-align: center;
-    color: #818892;
-    margin-top: 1rem;
-  }
-  
-  .inputSection {
-    display: flex;
-    padding: 0.5rem;
-    border-top: 1px solid #2c3442;
-    background: #192132;
-  }
-  
-  .input {
-    flex: 1;
-    padding: 0.5rem;
-    border: none;
-    border-radius: 4px;
-    outline: none;
-  }
-  
-  .sendButton {
-    margin-left: 0.5rem;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 4px;
-    background: #0cd444;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  
-  .sendButton:hover {
-    background: #0a852d;
-  }
-  
+}
+
+/* ------------------ BOTTOM BOX (TWO ROWS) ------------------ */
+.bottomBox {
+  display: flex;
+  flex-direction: column;
+  background: #0f1625;
+  border-top: 1px solid #2c3442;
+  padding: 0.6rem 1rem;
+  gap: 0.5rem; /* Space between rows */
+}
+
+.topRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #252b3a;
+  border-radius: 4px;
+  padding: 0.4rem 0.6rem;
+}
+
+.emojiButton {
+  background: transparent;
+  border: none;
+  color: #a0a6b1;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.chatInput {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: #d1d5db;
+  font-size: 0.9rem;
+  outline: none;
+  overflow: hidden;
+}
+
+.bottomRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* space them out */
+  padding: 0 0.2rem;
+}
+
+/* 1) Smaller "Online" text */
+.onlineCount {
+  color: #a0a6b1;
+  font-size: 0.75rem; /* smaller */
+}
+
+/* 2) "Rules button" with an icon only */
+.rulesButton {
+  background: #222736;
+  color: #d1d5db;
+  border: 1px solid #2c3442;
+  border-radius: 4px;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.rulesButton:hover {
+  background: #2c3442;
+}
+
+/* This icon will be displayed in place of text */
+.rulesIcon {
+  width: 16px;
+  height: 16px;
+  background-size: cover;
+  background-position: center;
+  background-image: url('https://i.ibb.co/xqMrXnCg/image.png');
+}
+
+.sendButton {
+  background: #0cd444;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.6rem 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.sendButton:hover {
+  background: #0ab83d;
+}
