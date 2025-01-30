@@ -1,0 +1,91 @@
+.betDisplay {
+    background-color: #121826; /* Premium dark navy background */
+    border-radius: 16px; /* Smooth, rounded corners */
+    padding: 32px; /* Generous padding for spacing */
+    color: #d1d5db; /* Subtle light gray text */
+    font-family: 'Inter', Arial, sans-serif; /* Modern, clean font */
+    max-width: 1100px;
+    margin: 20px auto; /* Centered on the page */
+
+  }
+  
+  .title {
+    font-size: 26px; /* Slightly smaller but elegant */
+    font-weight: 600; /* Semi-bold for a refined look */
+    margin-bottom: 10px;
+    text-align: center;
+    color: #ffffff; /* Crisp white for the title */
+  }
+  
+  .subtitle {
+    font-size: 14px; /* Smaller and subtle */
+    margin-bottom: 24px;
+    text-align: center;
+    color: #9ca3af; /* Muted gray for secondary text */
+  }
+  
+  .table {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Smaller gap between rows */
+    overflow: hidden;
+    max-height: 500px; /* Constrained height */
+  }
+  
+  .tableHeader {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    font-weight: 600; /* Semi-bold */
+    font-size: 14px; /* Subtle size for simplicity */
+    padding: 12px 0;
+    border-bottom: 1px solid #1e293b; /* Clean bottom line */
+    text-align: center;
+    color: #cbd5e1; /* Soft gray */
+    background-color: #1f2937; /* Clean darker header background */
+  }
+  
+  .row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    padding: 14px 0;
+    border-bottom: 1px solid #1e293b; /* Soft border */
+    text-align: center;
+    background-color: #1a202e; /* Uniform row background */
+    color: #d1d5db; /* Subtle text color */
+    animation: fade-in 0.8s ease-out; /* Smooth fade-in animation */
+  }
+  
+  .row:nth-child(even) {
+    background-color: #151a28; /* Slightly darker alternating rows */
+  }
+  
+  span {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  
+  .payout {
+    font-weight: 600; /* Slightly bold for emphasis */
+  }
+  
+  .payout.positive {
+    color: #22c55e; /* Soft green for profit */
+  }
+  
+  .payout.negative {
+    color: #ef4444; /* Soft red for loss */
+  }
+  
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(5px); /* Minimal drop animation */
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

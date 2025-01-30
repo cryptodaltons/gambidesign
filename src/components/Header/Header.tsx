@@ -12,7 +12,7 @@ export const Header = () => {
       className={`
         ${headerStyles.header} 
         grid grid-cols-12 gap-[30px]
-        ${sidebarContext.isOpen ? 'pl-[340px]' : 'pl-[160px]'}
+        ${sidebarContext.isOpen ? 'pl-[240px] sm:pl-[340px]' : 'pl-[60px] sm:pl-[160px]'}
         transition-all
         duration-300
         items-center
@@ -24,9 +24,9 @@ export const Header = () => {
         <Logo />
       </div>
 
-      <div className="col-span-10 flex justify-end">
-        <nav className={headerStyles.nav}>
-          <a href="/signin" className={typographyStyles['clickable-functional-12']}>
+      <div className="col-span-10 flex w-full">
+        <nav className={`${headerStyles.nav} justify-between sm:justify-end w-full`}>
+          <a href="/signin" className={`${typographyStyles['clickable-functional-12']} text-nowrap`}>
             Sign In
           </a>
           <Button label="Register" onClick={() => console.log('Register clicked')} />

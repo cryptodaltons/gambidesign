@@ -4,43 +4,35 @@
   overflow-y: auto;
   overflow-x: hidden;
   perspective: 10px;
-
-  /* Custom scrollbar styles */
-  scrollbar-width: thin; /* For Firefox */
-  scrollbar-color: #01e843 #192132; /* Thumb color (#01E843) and track color (#192132) */
+  scrollbar-width: thin;
+  scrollbar-color: #01e843 #192132;
 }
 
-/* Webkit-based browsers (Chrome, Safari, Edge) */
 .parallax-wrapper::-webkit-scrollbar {
-  width: 8px; /* Width of the scrollbar */
+  width: 8px;
 }
 
-/* Remove scrollbar arrows/buttons */
 .parallax-wrapper::-webkit-scrollbar-button {
-  display: none; /* Hides the arrows */
+  display: none;
   width: 0;
   height: 0;
 }
 
-/* Scrollbar Track */
 .parallax-wrapper::-webkit-scrollbar-track {
-  background: #192132; /* Dark track background */
-  border-radius: 8px; /* Slightly rounded track */
+  background: #192132;
+  border-radius: 8px;
 }
 
-/* Scrollbar Thumb */
 .parallax-wrapper::-webkit-scrollbar-thumb {
-  background: #01e843; /* Bright green thumb */
-  border-radius: 100px; /* Fully rounded scrollbar thumb */
-  border: 2px solid #192132; /* Matches track for a cleaner look */
+  background: #01e843;
+  border-radius: 100px;
+  border: 2px solid #192132;
 }
 
-/* Scrollbar Thumb Hover Effect */
 .parallax-wrapper::-webkit-scrollbar-thumb:hover {
-  background: #00c93a; /* Slightly darker green on hover */
+  background: #00c93a;
 }
 
-/* Additional Parallax Styles */
 .parallax-container {
   position: relative;
   display: flex;

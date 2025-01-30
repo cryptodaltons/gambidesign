@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { Home } from "./pages/home/Home.page";
+import { PostLoginHome } from "./pages/home-postlogin/Homepostlogin.page";
 import { MainLayout } from "./pages/Main.layout";
 import { SidebarContextProvider } from "./context/SidebarContext/SidebarContextProvider";
 
@@ -15,7 +16,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Home />,
+        element: <PostLoginHome />,
       },
     ],
   },

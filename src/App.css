@@ -40,15 +40,3 @@
 .read-the-docs {
   color: #888;
 }
-
-html {
-  height: 100vh;
-  overflow: hidden;
-}
-
-body {
-  height: 100%;
-  overflow-y: auto;
-  scrollbar-width: thin; /* For Firefox */
-  scrollbar-color: #01e843 #192132; /* Thumb color (#01E843) and track color (#192132) */
-}

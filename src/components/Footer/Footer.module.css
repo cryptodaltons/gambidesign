@@ -1,11 +1,97 @@
+/* Footer Styling */
 .footer {
-  @apply bg-secondary text-white pr-[100px] py-4 h-[60px] flex justify-between;
+  background-color: #111827;
+  color: #d1d5db;
+  padding: 40px 100px;
+  font-size: 14px;
 }
 
-.nav {
-  @apply flex items-center gap-4;
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
 }
 
-.link {
-  @apply text-white underline hover:text-attention transition-colors;
+.column {
+  list-style: none;
+}
+
+.columnTitle {
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+}
+
+.list li {
+  margin-bottom: 8px;
+}
+
+.list li a {
+  text-decoration: none;
+  color: #d1d5db;
+  transition: color 0.3s;
+}
+
+.list li a:hover {
+  color: #1e90ff;
+}
+
+.currencies {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.currencies h4 {
+  margin-bottom: 10px;
+}
+
+.currencyIcons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.footerBottom {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #4b5563;
+  padding-top: 20px;
+  gap: 20px;
+}
+
+.footerBottom div {
+  text-align: center;
+}
+
+.legal p, .contact p {
+  margin: 5px 0;
+}
+
+.contact a {
+  color: #1e90ff;
+  text-decoration: none;
+}
+
+.contact a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+  .footerBottom {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .footerBottom div {
+    text-align: left;
+  }
 }

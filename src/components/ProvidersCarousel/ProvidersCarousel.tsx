@@ -6,7 +6,6 @@ interface ProvidersCarouselProps {
   providers: string[]
 }
 
-// Utility function to shuffle an array
 const shuffleArray = (array: string[]) => {
   return array
     .map((item) => ({ item, sort: Math.random() }))
@@ -15,14 +14,13 @@ const shuffleArray = (array: string[]) => {
 }
 
 export const ProvidersCarousel: React.FC<ProvidersCarouselProps> = ({ providers }) => {
-  // Shuffle providers once using useMemo to prevent re-shuffling on re-renders
   const randomizedProviders = useMemo(() => shuffleArray(providers), [providers])
 
   return (
     <div className={styles.carouselContainer}>
       <Marquee
-        gradient={false} // Disable gradient for a clean look
-        speed={50} // Set marquee speed
+        gradient={false}
+        speed={50}
         pauseOnHover={false}
         style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}
       >

@@ -3,7 +3,7 @@
   display: inline-block;
   width: 42px;
   height: 42px;
-  perspective: 1000px; /* For 3D effect */
+  perspective: 1000px;
   transform: skewX(15deg);
 }
 
@@ -11,7 +11,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  backface-visibility: hidden; /* Hide the back during the flip */
+  backface-visibility: hidden;
 }
 
 .flipping {

@@ -12,6 +12,6 @@
 
 .container:hover {
   @apply bg-gradient-to-b from-[rgba(28,39,66,0.25)] to-[rgba(43,71,139,0.75)];
-  filter: brightness(1.2); /* Lightens the overall container */
+  filter: brightness(1.2);
   cursor: pointer;
 }

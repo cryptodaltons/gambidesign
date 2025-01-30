@@ -1,0 +1,19 @@
+.questionBlock {
+  @apply bg-secondaryMedium rounded-[4px] overflow-hidden flex flex-col shadow-inner w-full;
+}
+
+.header {
+  @apply flex items-center justify-between cursor-pointer px-3 py-3 hover:bg-secondaryLighter;
+}
+
+.icon {
+  @apply text-white transition-transform duration-300;
+}
+
+.divider {
+  @apply border-t-[1.5px] border-[#83aef947] mx-3;
+}
+
+.body {
+  @apply flex flex-col overflow-hidden break-words;
+}

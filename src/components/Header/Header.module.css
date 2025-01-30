@@ -1,5 +1,5 @@
 .header {
-  @apply bg-secondary text-white pr-[100px] py-4 h-[60px] flex justify-between;
+  @apply bg-secondary text-white pr-[20px] sm:pr-[100px] py-4 h-[60px] flex justify-between;
 }
 
 .nav {

@@ -2,21 +2,22 @@
   position: relative;
   width: 100%;
   height: 100%;
-  overflow: hidden; /* Hide overflowing content */
+  overflow: hidden;
 }
 
 .carouselItem {
-  flex: 0 0 auto; /* Prevent stretching */
-  width: clamp(100px, 10vw, 200px); /* Responsive width */
-  height: 100%; /* Match container height */
+  flex: 0 0 auto;
+  width: clamp(100px, 10vw, 200px);
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 10px;
+  background-color: #171f30;
 }
 
 .providerImage {
-  width: 100%; /* Fill the container */
+  width: 100%;
   height: 100%;
-  object-fit: contain; /* Maintain aspect ratio */
+  object-fit: contain;
 }

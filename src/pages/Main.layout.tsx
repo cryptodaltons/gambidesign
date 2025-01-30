@@ -1,27 +1,39 @@
-import { Outlet } from 'react-router-dom'
-import { Header } from '../components/Header/Header'
-import { Sidebar } from '../components/Sidebar/Sidebar'
-import { useSidebarContext } from '../context/SidebarContext/useSidebarContext'
-import { Footer } from '../components/Footer/Footer'
-import { useEffect, useRef } from 'react'
+import { Outlet } from 'react-router-dom';
+import { Sidebar } from '../components/Sidebar/Sidebar';
+import { PostRegisterHeader } from '../components/HeaderPostLogin/HeaderPostLogin';
+import { useSidebarContext } from '../context/SidebarContext/useSidebarContext';
+import { Footer } from '../components/Footer/Footer';
+import { ChatSidebar } from '../components/ChatSidebar/ChatSidebar';
+import { useEffect, useRef, useState } from 'react';
 
 export const MainLayout = () => {
-  const sidebarContext = useSidebarContext()
-  const backgroundRef = useRef<HTMLImageElement>(null)
+  const sidebarContext = useSidebarContext();
+  const backgroundRef = useRef<HTMLImageElement>(null);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   useEffect(() => {
-    document.body.addEventListener('scroll', () => {
-      if (!backgroundRef.current) {
-        return
+    const handleScroll = () => {
+      if (backgroundRef.current) {
+        backgroundRef.current.style.top = `${document.body.scrollTop * 0.5}px`;
       }
-      backgroundRef.current.style.top = `${document.body.scrollTop * 0.5}px`
-    })
-  }, [])
+    };
+
+    document.body.addEventListener('scroll', handleScroll);
+
+    return () => {
+      document.body.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const toggleChat = () => {
+    setIsChatOpen((prev) => !prev);
+  };
 
   return (
     <>
       <Sidebar />
-      <Header />
+      <PostRegisterHeader toggleChat={toggleChat} />
+      {isChatOpen && <ChatSidebar />} {/* Show chat sidebar when open */}
       <div
         className={`relative flex-1 flex flex-col pt-[60px] ${
           sidebarContext.isOpen ? 'ml-[240px]' : 'ml-[60px]'
@@ -35,9 +47,11 @@ export const MainLayout = () => {
             alt="Background"
           />
         </div>
-        <Outlet />
+        <div>
+          <Outlet />
+        </div>
         <Footer />
       </div>
     </>
-  )
-}
+  );
+};

@@ -3,7 +3,6 @@
   @apply min-w-[378px] min-h-[314px];
 }
 
-/* Common styling for each slide */
 .slide {
   @apply absolute top-0 left-0 w-full h-full bg-center bg-[length:100%_100%] bg-no-repeat;
   @apply transition-all duration-[400ms] ease-in-out;
@@ -17,21 +16,18 @@
   opacity: 1;
 }
 
-/* Slide to the left (behind). Slight rotation, smaller scale, blur */
 .slideLeft {
   z-index: 10;
   transform: rotateY(30deg) translateX(-35%) scale(0.8);
   filter: blur(4px);
 }
 
-/* Slide to the right (behind). Opposite rotation */
 .slideRight {
   z-index: 10;
   transform: rotateY(-30deg) translateX(35%) scale(0.8);
   filter: blur(4px);
 }
 
-/* Any slide not in the left, center, or right position is hidden */
 .hiddenSlide {
   @apply hidden;
 }

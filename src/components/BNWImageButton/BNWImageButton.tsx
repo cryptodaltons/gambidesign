@@ -5,13 +5,13 @@ import typographyStyles from '../../styles/Typography.module.css'
 interface BNWImageButtonProps {
   src: string
   alt: string
-  label?: string // Optional label
+  label?: string
   onClick?: () => void
   className?: string
-  style?: React.CSSProperties // For button styling
-  imageStyle?: React.CSSProperties // For image styling
-  labelStyle?: React.CSSProperties // For custom label styling
-  bwLightness?: number // Black-and-white lightness adjustment (default 100%)
+  style?: React.CSSProperties
+  imageStyle?: React.CSSProperties
+  labelStyle?: React.CSSProperties
+  bwLightness?: number
 }
 
 export const BNWImageButton: React.FC<BNWImageButtonProps> = ({

@@ -1,0 +1,163 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-color: #192132;
+    border-radius: 16px;
+    padding: 24px 32px;
+    color: #ffffff;
+    font-family: 'Inter', Arial, sans-serif;
+    max-width: 1750px;
+    margin: 0 auto;
+    gap: 24px;
+    overflow: hidden;
+}
+
+.welcomeSection {
+    width: 35%; 
+    min-width: 350px;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 16px;
+}
+
+.welcomeText {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.progressWrapper {
+    margin-top: 16px;
+    bottom: -100px;
+    position: relative;
+}
+
+.progressLabel {
+    font-size: 12px;
+    font-weight: 500;
+    color: #9ca3af;
+}
+
+.progressBar {
+    position: relative;
+    width: 100%;
+    height: 14px;
+    background: #374151;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-top: 8px;
+}
+
+.progressFill {
+    height: 100%;
+    background: #07e942;
+    transition: width 0.3s ease-in-out;
+}
+
+.tierLabels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+}
+
+.currentTier,
+.nextTier {
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.userName {
+    color: #07e942;
+}
+
+.actionsWrapper {
+    flex: 1;
+    overflow-x: auto; 
+    overflow-y: hidden;
+    display: flex;
+    gap: 0;
+    scrollbar-width: none; /* Hides scrollbar in Firefox */
+    cursor: grab;
+    user-select: none;
+}
+
+.actionsWrapper::-webkit-scrollbar {
+    display: none; /* Hides scrollbar in WebKit browsers like Chrome */
+}
+
+
+.actionsWrapper::-webkit-scrollbar-thumb {
+    background: #374151;
+    border-radius: 4px;
+}
+
+.actionsWrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.actions {
+    display: flex;
+    gap: 24px;
+    flex-wrap: nowrap;
+}
+
+.actionCard {
+    flex: 0 0 250px;
+    height: 280px; 
+    border-radius: 12px;
+    overflow: hidden;
+    text-align: left;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.actionCard img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    pointer-events: none; /* Prevent dragging */
+}
+
+.actionCard h3,
+.actionCard p,
+.cardContent {
+    position: relative;
+    z-index: 1;
+}
+
+.cardContent {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgb(32, 39, 56);
+    padding: 16px;
+    text-align: left;
+    z-index: 1;
+    color: #fff;
+    height: 80px; /* Uniform height for all cards */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.cardContent h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.cardContent p {
+    margin: 4px 0 0;
+    font-size: 14px;
+    font-weight: 400;
+}

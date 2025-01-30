@@ -1,4 +1,3 @@
-/* Keyframes for opacity animation */
 @keyframes appear-opacity {
   from {
     opacity: 0;
@@ -8,7 +7,6 @@
   }
 }
 
-/* Keyframes for scale animation */
 @keyframes appear-scale {
   from {
     transform: scale(0.9);
@@ -18,7 +16,6 @@
   }
 }
 
-/* Keyframes for combined animation */
 @keyframes appear-opacity-scale {
   from {
     opacity: 0;
@@ -30,32 +27,27 @@
   }
 }
 
-/* Class for opacity animation */
 .appear-opacity {
   animation: appear-opacity linear;
   animation-timeline: view();
   animation-range: entry 0% cover 40%;
 }
 
-/* Class for scale animation */
 .appear-scale {
   animation: appear-scale linear;
   animation-timeline: view();
   animation-range: entry 0% cover 40%;
 }
 
-/* Class for scale animation */
 .appear-opacity-scale {
   animation: appear-opacity-scale linear;
   animation-timeline: view();
   animation-range: entry 0% cover 40%;
 }
 
-/* Keyframes for move skewed up animation */
 @keyframes appear-move-skewed-up {
   from {
     opacity: 0;
-    /* bottom-right offset: 60px down, 16px right */
     transform: translate(32px, -120px);
   }
   to {
@@ -64,11 +56,9 @@
   }
 }
 
-/* Keyframes for move skewed down animation */
 @keyframes appear-move-skewed-down {
   from {
     opacity: 0;
-    /* top-left offset: 60px up, 16px left */
     transform: translate(-32px, 120px);
   }
   to {
@@ -77,16 +67,48 @@
   }
 }
 
-/* Class for move skewed up animation */
 .appear-move-skewed-up {
   animation: appear-move-skewed-up 1s linear forwards;
   animation-timeline: view();
   animation-range: entry 0% cover 45%;
 }
 
-/* Class for move skewed down animation */
 .appear-move-skewed-down {
   animation: appear-move-skewed-down 1s linear forwards;
   animation-timeline: view();
   animation-range: entry 0% cover 45%;
+}
+
+@keyframes appear-slide-right {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes appear-slide-left {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.appear-slide-right {
+  animation: appear-slide-right 1s ease-out forwards;
+  animation-timeline: view();
+  animation-range: entry 0% cover 25%;
+}
+
+.appear-slide-left {
+  animation: appear-slide-left 1s ease-out forwards;
+  animation-timeline: view();
+  animation-range: entry 0% cover 25%;
 }

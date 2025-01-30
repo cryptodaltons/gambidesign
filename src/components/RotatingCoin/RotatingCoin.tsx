@@ -5,9 +5,7 @@ interface RotatingCoinProps {
   images: string[]
   className?: string
   style?: React.CSSProperties
-  /** Interval between flips (defaults to 3000 ms) */
   flipDelay?: number
-  /** Time to wait before starting flips (defaults to 0 ms) */
   startDelay?: number
 }
 
@@ -20,15 +18,8 @@ export const RotatingCoin: React.FC<RotatingCoinProps> = ({
 }) => {
   const [currentImage, setCurrentImage] = useState(0)
   const [isFlipping, setIsFlipping] = useState(false)
-
-  /**
-   * Whether we've waited the `startDelay` and can begin flipping.
-   */
   const [shouldFlip, setShouldFlip] = useState(false)
 
-  /**
-   * 1) After mounting, wait `startDelay` ms (if any), then allow flipping.
-   */
   useEffect(() => {
     const timer = setTimeout(() => {
       setShouldFlip(true)
@@ -37,9 +28,6 @@ export const RotatingCoin: React.FC<RotatingCoinProps> = ({
     return () => clearTimeout(timer)
   }, [startDelay])
 
-  /**
-   * 2) Once we shouldFlip, set an interval to run flips every `flipDelay` ms.
-   */
   useEffect(() => {
     if (!shouldFlip) return
 

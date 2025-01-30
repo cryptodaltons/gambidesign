@@ -19,11 +19,8 @@ export const SidebarButtonGroup: React.FC<SidebarButtonGroupProps> = ({
 }) => {
   const [isExpanded, setIsExpanded] = useState(true)
   const contentRef = useRef<HTMLDivElement>(null)
-
-  // Access sidebar context
   const { isOpen: isSidebarOpen } = useSidebarContext()
 
-  // Automatically collapse expandable groups when the sidebar is closed
   useEffect(() => {
     if (isExpandable && !isSidebarOpen) {
       setIsExpanded(false)

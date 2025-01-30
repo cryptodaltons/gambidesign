@@ -1,0 +1,6 @@
+.container {
+  @apply flex items-center justify-between;
+  @apply p-4 px-12 shadow-md;
+  background: linear-gradient(to bottom, #404b6506, #678be206);
+  min-height: 200px;
+}
