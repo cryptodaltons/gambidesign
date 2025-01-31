@@ -26,6 +26,27 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({ isOpen, toggleChat }) 
     { username: 'Alice', text: "Hey, how's it going?" },
     { username: 'Bob', text: 'Not bad! Just checking this chat.' },
     { username: 'Charlie', text: 'Looks nice!' },
+    { username: 'Alice', text: "Hey, how's it going?" },
+    { username: 'Bob', text: 'Not bad! Just checking this chat.' },
+    { username: 'Charlie', text: 'Looks nice!' },
+    { username: 'Alice', text: "Hey, how's it going?" },
+    { username: 'Bob', text: 'Not bad! Just checking this chat.' },
+    { username: 'Charlie', text: 'Looks nice!' },
+    { username: 'Alice', text: "Hey, how's it going?" },
+    { username: 'Bob', text: 'Not bad! Just checking this chat.' },
+    { username: 'Charlie', text: 'Looks nice!' },
+    { username: 'Alice', text: "Hey, how's it going?" },
+    { username: 'Bob', text: 'Not bad! Just checking this chat.' },
+    { username: 'Charlie', text: 'Looks nice!' },
+    { username: 'Alice', text: "Hey, how's it going?" },
+    { username: 'Bob', text: 'Not bad! Just checking this chat.' },
+    { username: 'Charlie', text: 'Looks nice!' },
+    { username: 'Alice', text: "Hey, how's it going?" },
+    { username: 'Bob', text: 'Not bad! Just checking this chat.' },
+    { username: 'Charlie', text: 'Looks nice!' },
+    { username: 'Alice', text: "Hey, how's it going?" },
+    { username: 'Bob', text: 'Not bad! Just checking this chat.' },
+    { username: 'Charlie', text: 'Looks nice!' },
   ]);
   const [newMessage, setNewMessage] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -113,6 +134,8 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({ isOpen, toggleChat }) 
           >
             {/* A header row for rank icon & username */}
             <div className={styles.messageHeader}>
+              {/* Added self icon conditionally */}
+              {msg.username === 'You' && <span className={styles.selfIcon} />}
               <span className={styles.rankIcon} />
               <span
                 className={styles.username}
