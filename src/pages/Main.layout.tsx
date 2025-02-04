@@ -5,13 +5,12 @@ import { useSidebarContext } from '../context/SidebarContext/useSidebarContext';
 import { Footer } from '../components/Footer/Footer';
 import { ChatSidebar } from '../components/ChatSidebar/ChatSidebar';
 import { useEffect, useRef, useState } from 'react';
-import { Modal } from '../components/Modal/Modal';
+import { WalletModal } from '../components/Modal/WalletModal';
 
 export const MainLayout = () => {
   const sidebarContext = useSidebarContext();
   const backgroundRef = useRef<HTMLImageElement>(null);
   const [isChatOpen, setIsChatOpen] = useState(false);
-  // State to control the wallet modal
   const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
 
   useEffect(() => {
@@ -29,15 +28,13 @@ export const MainLayout = () => {
   }, []);
 
   const toggleChat = () => {
-    setIsChatOpen(!isChatOpen);
+    setIsChatOpen((prev) => !prev);
   };
 
-  // Handler to open the wallet modal (to be triggered from the Wallet button)
   const openWalletModal = () => {
     setIsWalletModalOpen(true);
   };
 
-  // Handler to close the wallet modal
   const closeWalletModal = () => {
     setIsWalletModalOpen(false);
   };
@@ -45,11 +42,10 @@ export const MainLayout = () => {
   return (
     <>
       <Sidebar />
-      {/* Pass openWalletModal as onWalletClick */}
       <PostRegisterHeader
         toggleChat={toggleChat}
         isChatOpen={isChatOpen}
-        onWalletClick={openWalletModal}
+        onWalletClick={openWalletModal} 
       />
       <ChatSidebar isOpen={isChatOpen} toggleChat={toggleChat} />
 
@@ -79,13 +75,7 @@ export const MainLayout = () => {
       </div>
 
       {/* Wallet Modal rendered at the layout level */}
-      <Modal isOpen={isWalletModalOpen} onClose={closeWalletModal}>
-        <div>
-          <h2>Wallet Modal</h2>
-          <p>This is the wallet modal content.</p>
-          {/* You can add more wallet-related content here if needed */}
-        </div>
-      </Modal>
+      <WalletModal isOpen={isWalletModalOpen} onClose={closeWalletModal} />
     </>
   );
 };

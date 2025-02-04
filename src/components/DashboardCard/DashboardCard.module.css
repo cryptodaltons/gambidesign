@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    background-color: #192132;
+    background: #141e30;
     border-radius: 16px;
     padding: 24px 32px;
     color: #ffffff;
@@ -27,7 +27,9 @@
     margin: 0;
     font-size: 26px;
     font-weight: 700;
-    color: #ffffff;
+    background: #ffffff;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .progressWrapper {
@@ -39,14 +41,14 @@
 .progressLabel {
     font-size: 12px;
     font-weight: 500;
-    color: #9ca3af;
+    color: #d1d5db;
 }
 
 .progressBar {
     position: relative;
     width: 100%;
     height: 14px;
-    background: #374151;
+    background: linear-gradient(90deg, #2c3e50, #4ca1af);
     border-radius: 6px;
     overflow: hidden;
     margin-top: 8px;
@@ -54,7 +56,7 @@
 
 .progressFill {
     height: 100%;
-    background: #07e942;
+    background: linear-gradient(90deg, #00ff99, #00ccff);
     transition: width 0.3s ease-in-out;
 }
 
@@ -68,11 +70,15 @@
 .nextTier {
     font-size: 14px;
     font-weight: bold;
-    color: #ffffff;
+    background: #ffffff;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .userName {
-    color: #07e942;
+    background: linear-gradient(90deg, #07e942, #07e942);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .actionsWrapper {
@@ -81,18 +87,17 @@
     overflow-y: hidden;
     display: flex;
     gap: 0;
-    scrollbar-width: none; /* Hides scrollbar in Firefox */
+    scrollbar-width: none;
     cursor: grab;
     user-select: none;
 }
 
 .actionsWrapper::-webkit-scrollbar {
-    display: none; /* Hides scrollbar in WebKit browsers like Chrome */
+    display: none;
 }
 
-
 .actionsWrapper::-webkit-scrollbar-thumb {
-    background: #374151;
+    background: linear-gradient(90deg, #374151, #64748b);
     border-radius: 4px;
 }
 
@@ -108,12 +113,13 @@
 
 .actionCard {
     flex: 0 0 250px;
-    height: 280px; 
+    height: 280px;
     border-radius: 12px;
     overflow: hidden;
     text-align: left;
     position: relative;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(135deg, #2c3e50, #4ca1af);
 }
 
 .actionCard img {
@@ -124,7 +130,7 @@
     height: 100%;
     object-fit: cover;
     z-index: 0;
-    pointer-events: none; /* Prevent dragging */
+    pointer-events: none;
 }
 
 .actionCard h3,
@@ -139,12 +145,12 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgb(32, 39, 56);
+    background: linear-gradient(180deg, rgba(32, 39, 56, 0.7), rgba(32, 39, 56, 1));
     padding: 16px;
     text-align: left;
     z-index: 1;
     color: #fff;
-    height: 80px; /* Uniform height for all cards */
+    height: 80px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -154,10 +160,16 @@
     margin: 0;
     font-size: 18px;
     font-weight: bold;
+    background: #ffffff;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .cardContent p {
     margin: 4px 0 0;
     font-size: 14px;
     font-weight: 400;
+    background: linear-gradient(90deg, #ffffff, #c2e9fb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }

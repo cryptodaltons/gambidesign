@@ -1,0 +1,416 @@
+/* Animation: fade and scale in */
+@keyframes fadeScaleIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Overlay with backdrop blur */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeScaleIn 0.4s ease-out;
+}
+
+/* Modal content with glassmorphism effect */
+.modalContent {
+  background: rgba(25, 33, 50, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 30px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+  color: #f0f0f0;
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  flex-direction: column;
+  animation: fadeScaleIn 0.4s ease-out;
+}
+
+/* Header */
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.titleContainer {
+  display: flex;
+  align-items: center;
+}
+
+/* Go Back Button (visible in deposit view) */
+.goBackButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 8px;
+  color: #0cd444;
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+.goBackIcon {
+  width: 24px;
+  height: 24px;
+}
+
+/* Wallet Icon */
+.walletIcon {
+  width: 32px;
+  height: 32px;
+  margin-right: 12px;
+  color: #0cd444;
+}
+
+/* Title */
+.title {
+  font-size: 26px;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Close Button */
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #aaa;
+  cursor: pointer;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.closeButton:hover {
+  transform: rotate(90deg);
+  color: #ff6b6b;
+}
+
+/* Currency Section (Wallet Overview) */
+.currencySection {
+  margin-bottom: 25px;
+}
+
+.sectionTitle {
+  font-size: 20px;
+  margin-bottom: 15px;
+  font-weight: 500;
+  border-left: 4px solid #0cd444;
+  padding-left: 8px;
+}
+
+/* Currency Container */
+.currencyContainer {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  padding: 10px;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+/* Custom Scrollbar for Currency Container */
+.currencyContainer::-webkit-scrollbar {
+  width: 8px;
+}
+
+.currencyContainer::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.currencyContainer::-webkit-scrollbar-thumb {
+  background: #0cd444;
+  border-radius: 8px;
+}
+
+/* Currency List */
+.currencyList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.currencyRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.currencyInfo {
+  display: flex;
+  align-items: center;
+}
+
+.currencyIcon {
+  width: 40px;
+  height: 40px;
+  margin-right: 12px;
+  border-radius: 50%;
+  background: #111;
+  padding: 4px;
+}
+
+.currencyText {
+  display: flex;
+  flex-direction: column;
+}
+
+.currencyCode {
+  font-size: 18px;
+  font-weight: bold;
+  color: #f0f0f0;
+}
+
+.currencyLabel {
+  font-size: 14px;
+  color: #ccc;
+  margin-top: 4px;
+}
+
+.balanceInfo {
+  text-align: right;
+}
+
+.balanceValue {
+  font-size: 18px;
+  font-weight: bold;
+  color: #f0f0f0;
+}
+
+.usdValue {
+  font-size: 14px;
+  color: #ccc;
+  margin-top: 4px;
+}
+
+/* Actions Section */
+.actionsSection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 25px;
+}
+
+.actionButton {
+  flex: 1 1 calc(50% - 16px);
+  padding: 14px 0;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.primary {
+  background: #0cd444;
+  color: #fff;
+}
+
+.primary:hover {
+  transform: translateY(-4px);
+  box-shadow: #0cd444;
+}
+
+.secondary {
+  background: linear-gradient(45deg, #6c757d, #5a6268);
+  color: #fff;
+}
+
+.secondary:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 20px rgba(106, 117, 125, 0.5);
+}
+
+/* Security Section */
+.securitySection {
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 20px;
+}
+
+.securityNotice {
+  font-size: 16px;
+  color: #ddd;
+  margin-bottom: 15px;
+}
+
+.enable2FAButton {
+  background: linear-gradient(45deg, #6c757d, #5a6268);
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  padding: 12px 24px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.enable2FAButton:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 20px rgba(106, 117, 125, 0.5);
+}
+
+/* =================== Deposit View Styles =================== */
+
+/* Container for Deposit View Content */
+.depositContent {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Cryptocurrency Selection Section */
+.cryptoSelectionSection {
+  margin-bottom: 20px;
+  position: relative; /* Enables absolute positioning for dropdown */
+}
+
+/* Crypto Selector */
+.cryptoSelector {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Dropdown Arrow */
+.dropdownArrow {
+  margin-left: 8px;
+}
+
+/* Dropdown Menu */
+.dropdownMenu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: #192132; /* Solid, fully opaque background */
+  padding: 10px;
+  border-radius: 8px;
+  z-index: 100;
+}
+
+/* Search Input in Dropdown */
+.searchInput {
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+}
+
+/* Dropdown List (scrollable area for items) */
+.dropdownList {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 8px;
+}
+
+/* Dropdown Item */
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+}
+
+.dropdownItem:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Deposit Address Section */
+.depositAddressSection {
+  margin-bottom: 20px;
+}
+
+.depositAddressLabel {
+  font-size: 16px;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #f0f0f0;
+}
+
+.depositAddressContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.depositAddressInput {
+  width: 100%;
+  padding: 10px 50px 10px 10px; /* Leaves space for the copy button */
+  border-radius: 8px;
+  border: none;
+  background: rgba(0, 0, 0, 0.2);
+  color: #f0f0f0;
+  font-size: 16px;
+}
+
+.copyButton {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #0cd444;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* QR Code Section */
+.qrContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.qrImage {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+}
+
+.qrInfo {
+  font-size: 14px;
+  color: #ccc;
+  text-align: center;
+}
+
+/* Deposit Security Section */
+.depositSecuritySection {
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 20px;
+}

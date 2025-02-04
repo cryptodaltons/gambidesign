@@ -1,11 +1,11 @@
-import { FaFacebook, FaInstagram, FaTelegram } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaTelegram, FaTwitter, FaYoutube } from "react-icons/fa";
 import footerStyles from "./Footer.module.css";
 
 export const Footer = () => {
   return (
     <footer className={footerStyles.footer}>
       <div className={footerStyles.container}>
-        {/* Casino Column */}
+        {/* Casino Section */}
         <div className={footerStyles.column}>
           <h3 className={footerStyles.columnTitle}>Casino</h3>
           <ul className={footerStyles.list}>
@@ -15,7 +15,8 @@ export const Footer = () => {
             <li><a href="/virtual-sports">Virtual Sports</a></li>
           </ul>
         </div>
-        {/* Sportsbook Column */}
+
+        {/* Sportsbook Section */}
         <div className={footerStyles.column}>
           <h3 className={footerStyles.columnTitle}>Sportsbook</h3>
           <ul className={footerStyles.list}>
@@ -25,7 +26,8 @@ export const Footer = () => {
             <li><a href="/tennis">Tennis</a></li>
           </ul>
         </div>
-        {/* Policies Column */}
+
+        {/* Policies Section */}
         <div className={footerStyles.column}>
           <h3 className={footerStyles.columnTitle}>Policies</h3>
           <ul className={footerStyles.list}>
@@ -34,7 +36,8 @@ export const Footer = () => {
             <li><a href="/self-exclusion">Self Exclusion</a></li>
           </ul>
         </div>
-        {/* Support Column */}
+
+        {/* Support Section */}
         <div className={footerStyles.column}>
           <h3 className={footerStyles.columnTitle}>Support</h3>
           <ul className={footerStyles.list}>
@@ -43,36 +46,38 @@ export const Footer = () => {
             <li><a href="/license">License</a></li>
           </ul>
         </div>
-        {/* Community Column */}
+
+        {/* Social Media Section */}
         <div className={footerStyles.column}>
-          <h3 className={footerStyles.columnTitle}>Community</h3>
-          <ul className={footerStyles.list}>
-            <li><a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><FaFacebook /> Facebook</a></li>
-            <li><a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><FaInstagram /> Instagram</a></li>
-            <li><a href="https://t.me" target="_blank" rel="noopener noreferrer"><FaTelegram /> Telegram</a></li>
-          </ul>
+          <h3 className={footerStyles.columnTitle}>Follow Us</h3>
+          <div className={footerStyles.socialIcons}>
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><FaFacebook /></a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
+            <a href="https://t.me" target="_blank" rel="noopener noreferrer"><FaTelegram /></a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"><FaTwitter /></a>
+            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer"><FaYoutube /></a>
+          </div>
         </div>
       </div>
 
       {/* Accepted Currencies Section */}
       <div className={footerStyles.currencies}>
         <h4>Accepted Currencies</h4>
-        <ul className={footerStyles.currencyIcons}>
-          <li>TRY</li>
-          <li>BTC</li>
-          <li>ETH</li>
-          <li>USDT</li>
-          <li>BNB</li>
-          <li>TRX</li>
-        </ul>
+        <div className={footerStyles.currencyIcons}>
+          <span>BTC</span>
+          <span>ETH</span>
+          <span>USDT</span>
+          <span>BNB</span>
+          <span>TRX</span>
+        </div>
       </div>
 
       {/* Footer Bottom Section */}
       <div className={footerStyles.footerBottom}>
         <div className={footerStyles.legal}>
           <p>
-            The owner and operator of the Gambi website is Kasego Global N.V. 
-            Registration number - 165461. Address: Hanchi Snoa 19, Curaçao.
+            Gambi.com is operated by Kasego Global N.V. <br />
+            Reg No: 165461. Address: Hanchi Snoa 19, Curaçao.
           </p>
           <p>Licensed by Anjouan eGaming. License No: ALSI-102404003-FI</p>
         </div>
