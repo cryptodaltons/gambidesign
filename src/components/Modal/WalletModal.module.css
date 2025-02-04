@@ -59,7 +59,7 @@
   align-items: center;
 }
 
-/* Go Back Button (visible in deposit view) */
+/* Go Back Button (visible in deposit/withdraw view) */
 .goBackButton {
   background: none;
   border: none;
@@ -233,7 +233,7 @@
 
 .primary:hover {
   transform: translateY(-4px);
-  box-shadow: #0cd444;
+  box-shadow: 0 4px 20px rgba(12, 212, 68, 0.5);
 }
 
 .secondary {
@@ -283,13 +283,12 @@
   flex-direction: column;
 }
 
-/* Cryptocurrency Selection Section */
+/* Cryptocurrency Selection Section (used in both deposit and withdraw) */
 .cryptoSelectionSection {
   margin-bottom: 20px;
-  position: relative; /* Enables absolute positioning for dropdown */
+  position: relative;
 }
 
-/* Crypto Selector */
 .cryptoSelector {
   display: flex;
   align-items: center;
@@ -298,6 +297,31 @@
   padding: 10px;
   border-radius: 8px;
   cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.cryptoSelector:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* New layout for withdraw dropdown content: left text and right balance.
+   These styles are used only in the withdraw picker to match the deposit picker's size. */
+.cryptoSelectorContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  /* Remove extra gap to match deposit view */
+}
+
+.cryptoLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Match the margin-right on currencyIcon in deposit view */
+}
+
+.cryptoBalance {
+  text-align: right;
 }
 
 /* Dropdown Arrow */
@@ -311,10 +335,11 @@
   top: calc(100% + 4px);
   left: 0;
   right: 0;
-  background: #192132; /* Solid, fully opaque background */
+  background: #192132;
   padding: 10px;
   border-radius: 8px;
   z-index: 100;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* Search Input in Dropdown */
@@ -341,6 +366,7 @@
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.05);
   cursor: pointer;
+  transition: background 0.2s ease;
 }
 
 .dropdownItem:hover {
@@ -413,4 +439,151 @@
   text-align: center;
   border-top: 1px solid rgba(255, 255, 255, 0.15);
   padding-top: 20px;
+}
+
+/* =================== Withdraw View Styles =================== */
+
+/* Container for Withdraw View Content */
+.withdrawContent {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Amount to Withdraw Section */
+.withdrawAmountSection {
+  margin-bottom: 20px;
+}
+
+.withdrawAmountLabel {
+  font-size: 16px;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #f0f0f0;
+}
+
+.withdrawAmountContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.withdrawAmountInput {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(0, 0, 0, 0.2);
+  color: #f0f0f0;
+  font-size: 16px;
+}
+
+.maxButton {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #0cd444;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.maxButton:hover {
+  background: #0bbf40;
+}
+
+/* Withdrawal Address Section */
+.withdrawAddressSection {
+  margin-bottom: 20px;
+}
+
+.withdrawAddressLabel {
+  font-size: 16px;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #f0f0f0;
+}
+
+.withdrawAddressContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.withdrawAddressInput {
+  width: 100%;
+  padding: 10px 50px 10px 10px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(0, 0, 0, 0.2);
+  color: #f0f0f0;
+  font-size: 16px;
+}
+
+.pasteButton {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #0cd444;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Withdrawal Conditions Section */
+.withdrawConditions {
+  font-size: 14px;
+  color: #ccc;
+  margin-bottom: 20px;
+}
+
+.withdrawConditions p {
+  margin: 4px 0;
+}
+
+/* Withdraw Action Button */
+.withdrawActionButton {
+  padding: 14px 0;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  background: #0cd444;
+  color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.withdrawActionButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.withdrawActionButton:hover:not(:disabled) {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 20px rgba(12, 212, 68, 0.5);
+}
+
+/* Updated balance text for withdraw view */
+.withdrawBalanceValue {
+  font-size: 16px;
+  font-weight: bold;
+  color: #f0f0f0;
+}
+
+.withdrawUsdValue {
+  font-size: 12px;
+  color: #ccc;
+}
+
+/* =================== Focus States for Inputs =================== */
+.searchInput:focus,
+.depositAddressInput:focus,
+.withdrawAmountInput:focus,
+.withdrawAddressInput:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #0cd444;
 }
