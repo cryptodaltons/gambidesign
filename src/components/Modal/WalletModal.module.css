@@ -22,7 +22,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  /* Slightly lower than modalContent */
+  z-index: 999;
   animation: fadeScaleIn 0.4s ease-out;
 }
 
@@ -42,6 +43,19 @@
   display: flex;
   flex-direction: column;
   animation: fadeScaleIn 0.4s ease-out;
+  /* Make it above .modalOverlay and create a stacking context */
+  position: relative;
+  z-index: 2000;
+  /* So dropdowns won't get clipped */
+  overflow: visible;
+}
+
+.modalContent::-webkit-scrollbar {
+  width: 8px;
+}
+.modalContent::-webkit-scrollbar-thumb {
+  background: #0cd444;
+  border-radius: 8px;
 }
 
 /* Header */
@@ -59,7 +73,6 @@
   align-items: center;
 }
 
-/* Go Back Button (visible in deposit/withdraw view) */
 .goBackButton {
   background: none;
   border: none;
@@ -76,7 +89,6 @@
   height: 24px;
 }
 
-/* Wallet Icon */
 .walletIcon {
   width: 32px;
   height: 32px;
@@ -84,14 +96,12 @@
   color: #0cd444;
 }
 
-/* Title */
 .title {
   font-size: 26px;
   margin: 0;
   font-weight: 500;
 }
 
-/* Close Button */
 .closeButton {
   background: none;
   border: none;
@@ -106,7 +116,7 @@
   color: #ff6b6b;
 }
 
-/* Currency Section (Wallet Overview) */
+/* Wallet Overview */
 .currencySection {
   margin-bottom: 25px;
 }
@@ -119,7 +129,6 @@
   padding-left: 8px;
 }
 
-/* Currency Container */
 .currencyContainer {
   background: rgba(0, 0, 0, 0.2);
   border-radius: 12px;
@@ -128,22 +137,18 @@
   overflow-y: auto;
 }
 
-/* Custom Scrollbar for Currency Container */
 .currencyContainer::-webkit-scrollbar {
   width: 8px;
 }
-
 .currencyContainer::-webkit-scrollbar-track {
   background: rgba(0, 0, 0, 0.1);
   border-radius: 8px;
 }
-
 .currencyContainer::-webkit-scrollbar-thumb {
   background: #0cd444;
   border-radius: 8px;
 }
 
-/* Currency List */
 .currencyList {
   display: flex;
   flex-direction: column;
@@ -275,18 +280,42 @@
   box-shadow: 0 4px 20px rgba(106, 117, 125, 0.5);
 }
 
-/* =================== Deposit View Styles =================== */
-
-/* Container for Deposit View Content */
+/* -------------------- Deposit View Styles -------------------- */
 .depositContent {
   display: flex;
   flex-direction: column;
 }
 
-/* Cryptocurrency Selection Section (used in both deposit and withdraw) */
+/* Tabs */
+.depositTabContainer {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.depositTabButton {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #0cd444;
+  background: transparent;
+  color: #f0f0f0;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s ease;
+}
+
+.depositTabButton:not(:last-child) {
+  border-right: none;
+}
+
+.activeTab {
+  background: #0cd444;
+  color: #fff;
+}
+
+/* -------------------- Crypto Selection -------------------- */
 .cryptoSelectionSection {
   margin-bottom: 20px;
-  position: relative;
+  /* position: relative;  <-- Removed so it's not the reference for the dropdowns */
 }
 
 .cryptoSelector {
@@ -298,26 +327,24 @@
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.3s ease;
+  position: relative; /* Important: this is now the dropdown anchor */
 }
 
 .cryptoSelector:hover {
   background: rgba(0, 0, 0, 0.3);
 }
 
-/* New layout for withdraw dropdown content: left text and right balance.
-   These styles are used only in the withdraw picker to match the deposit picker's size. */
 .cryptoSelectorContent {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  /* Remove extra gap to match deposit view */
+  width: 100;
 }
 
 .cryptoLeft {
   display: flex;
   align-items: center;
-  gap: 12px; /* Match the margin-right on currencyIcon in deposit view */
+  gap: 12px;
 }
 
 .cryptoBalance {
@@ -329,20 +356,21 @@
   margin-left: 8px;
 }
 
-/* Dropdown Menu */
+/* Dropdown Menu (modified for correct anchoring) */
 .dropdownMenu {
   position: absolute;
-  top: calc(100% + 4px);
+  top: 100%;
   left: 0;
-  right: 0;
+  margin-top: 4px;
+  width: 100%;
   background: #192132;
   padding: 10px;
   border-radius: 8px;
-  z-index: 100;
+  /* High z-index so it appears on top */
+  z-index: 9999;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Search Input in Dropdown */
 .searchInput {
   width: 100%;
   padding: 8px;
@@ -350,14 +378,12 @@
   border: none;
 }
 
-/* Dropdown List (scrollable area for items) */
 .dropdownList {
   max-height: 200px;
   overflow-y: auto;
   margin-top: 8px;
 }
 
-/* Dropdown Item */
 .dropdownItem {
   display: flex;
   align-items: center;
@@ -367,13 +393,14 @@
   background: rgba(255, 255, 255, 0.05);
   cursor: pointer;
   transition: background 0.2s ease;
+  margin-bottom: 6px;
 }
 
 .dropdownItem:hover {
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* Deposit Address Section */
+/* Deposit Address */
 .depositAddressSection {
   margin-bottom: 20px;
 }
@@ -394,7 +421,7 @@
 
 .depositAddressInput {
   width: 100%;
-  padding: 10px 50px 10px 10px; /* Leaves space for the copy button */
+  padding: 10px 50px 10px 10px;
   border-radius: 8px;
   border: none;
   background: rgba(0, 0, 0, 0.2);
@@ -413,7 +440,7 @@
   font-weight: bold;
 }
 
-/* QR Code Section */
+/* QR Code */
 .qrContainer {
   display: flex;
   justify-content: center;
@@ -434,22 +461,357 @@
   text-align: center;
 }
 
-/* Deposit Security Section */
+/* Deposit Security */
 .depositSecuritySection {
   text-align: center;
   border-top: 1px solid rgba(255, 255, 255, 0.15);
   padding-top: 20px;
 }
 
-/* =================== Withdraw View Styles =================== */
+/* -------------------- Fiat Deposit Styles -------------------- */
+.dropdownTitle {
+  font-size: 16px;
+  font-weight: bold;
+  color: #f0f0f0;
+  margin: 10px 0 8px;
+}
 
-/* Container for Withdraw View Content */
+/* Fiat Activation Prompt */
+.fiatActivationPrompt {
+  text-align: center;
+  padding: 20px;
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.activateFiatButton {
+  margin-top: 15px;
+  padding: 12px;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  background: #0cd444;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.activateFiatButton:hover {
+  background: #0bbf40;
+}
+
+/* Fiat Activation Form */
+.fiatActivationForm {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.fiatTitle {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #f0f0f0;
+}
+
+.fiatFormContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 15px 0;
+}
+
+.fiatFormContainer label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  color: #f0f0f0;
+}
+
+.fiatFormContainer input[type="text"],
+.fiatFormContainer input[type="number"],
+.fiatFormContainer select {
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+  margin-top: 5px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Additional fix: Place Day/Month/Year and phone region inline. */
+.customDropdownContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0;
+}
+
+/* Each small dropdown is anchored individually */
+.customDropdownContainer .cryptoSelector {
+  flex: none;
+}
+
+/* Let the phone number input stretch */
+.customDropdownContainer input {
+  flex: 1;
+}
+
+/* Switch for Turkish Lira */
+.switchContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.switchContainer span {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px; 
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+.switch input:checked + .slider {
+  background-color: #0cd444;
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+/* Save and Continue Button */
+.saveAndContinueButton {
+  margin-top: 15px;
+  padding: 12px;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  background: #0cd444;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.saveAndContinueButton:disabled {
+  background: #555;
+  cursor: not-allowed;
+}
+
+.saveAndContinueButton:hover:not(:disabled) {
+  background: #0bbf40;
+}
+
+/* Fiat Deposit Option Screen (fiatStep 2) */
+.fiatDepositOptionScreen {
+  text-align: center;
+  padding: 20px;
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.depositFiatButton {
+  margin-top: 15px;
+  padding: 12px;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  background: #0cd444;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.depositFiatButton:disabled {
+  background: #555;
+  cursor: not-allowed;
+}
+
+.depositFiatButton:hover:not(:disabled) {
+  background: #0bbf40;
+}
+
+.fiatPaymentSelection {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  /* Limit the height so it doesn't overflow the modal */
+  max-height: 600px;
+  /* Add scrolling if content exceeds that height */
+  overflow-y: auto;
+}
+
+/* Optional custom scrollbar styling */
+.fiatPaymentSelection::-webkit-scrollbar {
+  width: 8px;
+}
+
+.fiatPaymentSelection::-webkit-scrollbar-thumb {
+  background: #0cd444;
+  border-radius: 8px;
+}
+
+
+.fiatPaymentTitle {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #f0f0f0;
+}
+
+.paymentMethodGroup {
+  margin-bottom: 15px;
+}
+
+.paymentMethodGroupTitle {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #f0f0f0;
+}
+
+.fiatPaymentOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.paymentOptionButton {
+  padding: 10px;
+  border: 1px solid #0cd444;
+  border-radius: 8px;
+  background: transparent;
+  color: #f0f0f0;
+  cursor: pointer;
+  flex: 1;
+  text-align: center;
+  transition: background 0.3s ease;
+}
+
+.selectedPaymentOption {
+  background: #0cd444;
+  color: #fff;
+}
+
+/* Fiat Amount Selection */
+.fiatAmountSelection {
+  margin-top: 15px;
+}
+
+.fiatAmountSelection h4 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #f0f0f0;
+}
+
+.presetAmounts {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.presetAmounts button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #0cd444;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+.presetAmounts button:hover {
+  background: #0bbf40;
+}
+
+.fiatAmountSelection label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  color: #f0f0f0;
+  margin-bottom: 5px;
+}
+
+.fiatAmountSelection input[type="number"] {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.finalFiatDepositButton {
+  margin-top: 10px;
+  padding: 12px;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  background: #0cd444;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.finalFiatDepositButton:disabled {
+  background: #555;
+  cursor: not-allowed;
+}
+
+.finalFiatDepositButton:hover:not(:disabled) {
+  background: #0bbf40;
+}
+
+/* -------------------- Withdraw View Styles -------------------- */
 .withdrawContent {
   display: flex;
   flex-direction: column;
 }
 
-/* Amount to Withdraw Section */
 .withdrawAmountSection {
   margin-bottom: 20px;
 }
@@ -494,7 +856,6 @@
   background: #0bbf40;
 }
 
-/* Withdrawal Address Section */
 .withdrawAddressSection {
   margin-bottom: 20px;
 }
@@ -533,7 +894,6 @@
   font-weight: bold;
 }
 
-/* Withdrawal Conditions Section */
 .withdrawConditions {
   font-size: 14px;
   color: #ccc;
@@ -544,7 +904,6 @@
   margin: 4px 0;
 }
 
-/* Withdraw Action Button */
 .withdrawActionButton {
   padding: 14px 0;
   border-radius: 12px;
@@ -567,7 +926,6 @@
   box-shadow: 0 4px 20px rgba(12, 212, 68, 0.5);
 }
 
-/* Updated balance text for withdraw view */
 .withdrawBalanceValue {
   font-size: 16px;
   font-weight: bold;
@@ -579,11 +937,41 @@
   color: #ccc;
 }
 
-/* =================== Focus States for Inputs =================== */
+/* -------------------- Network Selection -------------------- */
+.networkSelectionSection {
+  margin-bottom: 20px;
+  /* position: relative; <-- Removed so it's not the reference for the dropdowns */
+}
+
+.networkSelector {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  position: relative; /* Important: dropdown anchor */
+}
+
+.networkSelector:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.networkName {
+  font-size: 16px;
+  color: #f0f0f0;
+}
+
+/* -------------------- Input Focus -------------------- */
 .searchInput:focus,
 .depositAddressInput:focus,
 .withdrawAmountInput:focus,
-.withdrawAddressInput:focus {
+.withdrawAddressInput:focus,
+.fiatFormContainer input[type="text"]:focus,
+.fiatFormContainer input[type="number"]:focus,
+.fiatFormContainer select:focus {
   outline: none;
   box-shadow: 0 0 0 2px #0cd444;
 }
