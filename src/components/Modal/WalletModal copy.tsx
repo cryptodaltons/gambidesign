@@ -94,7 +94,7 @@ const phoneRegions = [
   { code: '+44', label: 'UK (+44)' },
 ];
 
-// Payment methods for fiat deposit/withdraw
+// Payment methods for fiat deposit
 const paymentMethods: Record<string, string[]> = {
   havale: ['Hizli Havale', 'Aninda Banka'],
   sanal: ['Pay CO', 'PayFix', 'Hizli PAPARA', 'Aninda MFT'],
@@ -107,25 +107,22 @@ export const WalletModal: FC<WalletModalProps> = ({ isOpen, onClose }) => {
   const [isDepositView, setDepositView] = useState(false);
   const [isWithdrawView, setWithdrawView] = useState(false);
 
-  // ---------------- DEPOSIT STATES ----------------
   // --- Deposit (Crypto) States ---
   const [selectedCrypto, setSelectedCrypto] = useState<DepositCurrency>(depositCurrencies[0]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const initialDepositNetworks = networkMapping[depositCurrencies[0].code] || [];
-  const [selectedDepositNetwork, setSelectedDepositNetwork] = useState<CryptoNetwork>(
-    initialDepositNetworks[0]
-  );
+  const [selectedDepositNetwork, setSelectedDepositNetwork] = useState<CryptoNetwork>(initialDepositNetworks[0]);
   const [showDepositNetworkDropdown, setShowDepositNetworkDropdown] = useState(false);
   const [depositNetworkSearchQuery, setDepositNetworkSearchQuery] = useState('');
 
   // --- Deposit (Fiat) States ---
-  // Tab system for deposit: "crypto" vs. "fiat"
+  // Tab system: "crypto" vs. "fiat"
   const [selectedDepositSection, setSelectedDepositSection] = useState<'crypto' | 'fiat'>('crypto');
-  // depositFiat steps: 0 = Activation Prompt, 1 = Activation Form, 2 = Select Fiat Currency, 3 = Payment Method
+  // fiatStep: 0 = Activation Prompt, 1 = Activation Form, 2 = Select Fiat Currency, 3 = Payment Method
   const [fiatStep, setFiatStep] = useState(0);
 
-  // Activation form state (for depositing fiat)
+  // Activation form state
   const [activateTL, setActivateTL] = useState(false);
   const [nationalId, setNationalId] = useState('');
   // ID Expiration
@@ -152,43 +149,7 @@ export const WalletModal: FC<WalletModalProps> = ({ isOpen, onClose }) => {
   const [fiatPaymentOption, setFiatPaymentOption] = useState('');
   const [fiatDepositAmount, setFiatDepositAmount] = useState('');
 
-  // ---------------- WITHDRAW STATES ----------------
-  // Tab system for withdraw: "crypto" vs. "fiat"
-  const [selectedWithdrawSection, setSelectedWithdrawSection] = useState<'crypto' | 'fiat'>('crypto');
-
-  // Step system for fiat withdraw (similar to deposit):
-  // 0 = Activation Prompt, 1 = Activation Form, 2 = Select Fiat Currency, 3 = Payment Method
-  const [fiatWithdrawStep, setFiatWithdrawStep] = useState(0);
-
-  // Activation form state (for withdrawing fiat)
-  const [activateTLWithdraw, setActivateTLWithdraw] = useState(false);
-  const [withdrawNationalId, setWithdrawNationalId] = useState('');
-  // ID Expiration (withdraw)
-  const [wIdExpDay, setWIdExpDay] = useState('');
-  const [wIdExpMonth, setWIdExpMonth] = useState('');
-  const [wIdExpYear, setWIdExpYear] = useState('');
-  // Phone (withdraw)
-  const [withdrawPhoneNumber, setWithdrawPhoneNumber] = useState('');
-  const [selectedWithdrawPhoneRegion, setSelectedWithdrawPhoneRegion] = useState(phoneRegions[0].code);
-
-  // Day/Month/Year dropdown toggles for withdraw
-  const [showWithdrawDayDropdown, setShowWithdrawDayDropdown] = useState(false);
-  const [showWithdrawMonthDropdown, setShowWithdrawMonthDropdown] = useState(false);
-  const [showWithdrawYearDropdown, setShowWithdrawYearDropdown] = useState(false);
-  // Phone region dropdown for withdraw
-  const [showWithdrawPhoneRegionDropdown, setShowWithdrawPhoneRegionDropdown] = useState(false);
-
-  // Fiat currency selection (withdraw)
-  const [selectedFiatWithdrawCurrency, setSelectedFiatWithdrawCurrency] =
-    useState<DepositCurrency | null>(null);
-  const [showFiatWithdrawCurrencyDropdown, setShowFiatWithdrawCurrencyDropdown] = useState(false);
-  const [fiatWithdrawSearchQuery, setFiatWithdrawSearchQuery] = useState('');
-
-  // Payment method & amount for fiat withdraw
-  const [fiatWithdrawPaymentOption, setFiatWithdrawPaymentOption] = useState('');
-  const [fiatWithdrawAmount, setFiatWithdrawAmount] = useState('');
-
-  // --- Crypto Withdraw states ---
+  // --- Withdraw States ---
   const initialWithdrawCrypto =
     depositCurrencies.find((c) => c.code === 'LTC') || depositCurrencies[0];
   const [withdrawSelectedCrypto, setWithdrawSelectedCrypto] =
@@ -196,8 +157,7 @@ export const WalletModal: FC<WalletModalProps> = ({ isOpen, onClose }) => {
   const [withdrawShowDropdown, setWithdrawShowDropdown] = useState(false);
   const [withdrawSearchQuery, setWithdrawSearchQuery] = useState('');
   const initialWithdrawNetworks = networkMapping[initialWithdrawCrypto.code] || [];
-  const [selectedWithdrawNetwork, setSelectedWithdrawNetwork] =
-    useState<CryptoNetwork>(initialWithdrawNetworks[0]);
+  const [selectedWithdrawNetwork, setSelectedWithdrawNetwork] = useState<CryptoNetwork>(initialWithdrawNetworks[0]);
   const [showWithdrawNetworkDropdown, setShowWithdrawNetworkDropdown] = useState(false);
   const [withdrawNetworkSearchQuery, setWithdrawNetworkSearchQuery] = useState('');
   const [withdrawAmount, setWithdrawAmount] = useState('');
@@ -207,7 +167,7 @@ export const WalletModal: FC<WalletModalProps> = ({ isOpen, onClose }) => {
   // Dummy crypto deposit address
   const depositAddress = '1A2b3C4d5E6f7G8H9I0';
 
-  // Validation for Fiat Activation Form (Deposit)
+  // Validation for Fiat Activation Form
   const isFiatFormValid =
     activateTL &&
     nationalId.trim() !== '' &&
@@ -216,15 +176,6 @@ export const WalletModal: FC<WalletModalProps> = ({ isOpen, onClose }) => {
     idExpYear !== '' &&
     phoneNumber.trim() !== '';
 
-  // Validation for Fiat Activation Form (Withdraw)
-  const isFiatWithdrawFormValid =
-    activateTLWithdraw &&
-    withdrawNationalId.trim() !== '' &&
-    wIdExpDay !== '' &&
-    wIdExpMonth !== '' &&
-    wIdExpYear !== '' &&
-    withdrawPhoneNumber.trim() !== '';
-
   // If modal closed, reset states
   useEffect(() => {
     if (!isOpen) {
@@ -232,7 +183,6 @@ export const WalletModal: FC<WalletModalProps> = ({ isOpen, onClose }) => {
       setDepositView(false);
       setWithdrawView(false);
 
-      // Deposit states
       setShowDropdown(false);
       setSearchQuery('');
       setShowDepositNetworkDropdown(false);
@@ -252,35 +202,15 @@ export const WalletModal: FC<WalletModalProps> = ({ isOpen, onClose }) => {
       setShowPhoneRegionDropdown(false);
       setFiatPaymentOption('');
       setFiatDepositAmount('');
-      setSelectedFiatCurrency(null);
-      setShowFiatCurrencyDropdown(false);
-      setFiatSearchQuery('');
-
-      // Withdraw states
       setWithdrawShowDropdown(false);
       setWithdrawSearchQuery('');
       setShowWithdrawNetworkDropdown(false);
       setWithdrawNetworkSearchQuery('');
       setWithdrawAmount('');
       setWithdrawAddress('');
-      setSelectedWithdrawSection('crypto');
-      setFiatWithdrawStep(0);
-      setActivateTLWithdraw(false);
-      setWithdrawNationalId('');
-      setWIdExpDay('');
-      setWIdExpMonth('');
-      setWIdExpYear('');
-      setWithdrawPhoneNumber('');
-      setShowWithdrawDayDropdown(false);
-      setShowWithdrawMonthDropdown(false);
-      setShowWithdrawYearDropdown(false);
-      setSelectedWithdrawPhoneRegion(phoneRegions[0].code);
-      setShowWithdrawPhoneRegionDropdown(false);
-      setFiatWithdrawPaymentOption('');
-      setFiatWithdrawAmount('');
-      setSelectedFiatWithdrawCurrency(null);
-      setShowFiatWithdrawCurrencyDropdown(false);
-      setFiatWithdrawSearchQuery('');
+      setSelectedFiatCurrency(null);
+      setShowFiatCurrencyDropdown(false);
+      setFiatSearchQuery('');
     }
   }, [isOpen]);
 
@@ -307,14 +237,10 @@ export const WalletModal: FC<WalletModalProps> = ({ isOpen, onClose }) => {
     network.code.toLowerCase().includes(withdrawNetworkSearchQuery.toLowerCase())
   );
 
-  // Fiat (Deposit & Withdraw) 
+  // Fiat
   const filteredFiatCurrencies = fiatCurrencies.filter((fc) =>
     fc.name.toLowerCase().includes(fiatSearchQuery.toLowerCase()) ||
     fc.code.toLowerCase().includes(fiatSearchQuery.toLowerCase())
-  );
-  const filteredFiatWithdrawCurrencies = fiatCurrencies.filter((fc) =>
-    fc.name.toLowerCase().includes(fiatWithdrawSearchQuery.toLowerCase()) ||
-    fc.code.toLowerCase().includes(fiatWithdrawSearchQuery.toLowerCase())
   );
 
   // --- Clipboard Functions ---
@@ -332,15 +258,9 @@ export const WalletModal: FC<WalletModalProps> = ({ isOpen, onClose }) => {
   };
 
   const isWithdrawDisabled =
-    selectedWithdrawSection === 'crypto'
-      ? !withdrawAmount ||
-        parseFloat(withdrawAmount) <= 0 ||
-        withdrawAddress.trim() === ''
-      : // For fiat withdraw, disabled if no amount or out of range
-        !fiatWithdrawAmount ||
-        parseFloat(fiatWithdrawAmount) < 1000 ||
-        parseFloat(fiatWithdrawAmount) > 30000 ||
-        !fiatWithdrawPaymentOption;
+    !withdrawAmount ||
+    parseFloat(withdrawAmount) <= 0 ||
+    withdrawAddress.trim() === '';
 
   if (!isOpen) return null;
 
@@ -401,7 +321,7 @@ export const WalletModal: FC<WalletModalProps> = ({ isOpen, onClose }) => {
         {/* ---------------- Wallet Content ---------------- */}
         {isDepositView ? (
           <div className={styles.depositContent}>
-            {/* Tabs: Crypto vs. Fiat (Deposit) */}
+            {/* Tabs: Crypto vs. Fiat */}
             <div className={styles.depositTabContainer}>
               <button
                 className={`${styles.depositTabButton} ${
@@ -917,13 +837,9 @@ export const WalletModal: FC<WalletModalProps> = ({ isOpen, onClose }) => {
                     <h3 className={styles.fiatPaymentTitle}>
                       Deposit {selectedFiatCurrency?.code || 'Fiat'}
                     </h3>
-                    {/* Payment method groups, with some design improvements */}
+                    {/* Payment method groups */}
                     <div className={styles.paymentMethodGroup}>
-                      <div className={styles.paymentMethodGroupHeader}>
-                        <div className={styles.paymentMethodGroupTitle}>
-                          <span className={styles.paymentMethodIcon}>💸</span> Havale
-                        </div>
-                      </div>
+                      <div className={styles.paymentMethodGroupTitle}>Havale</div>
                       <div className={styles.fiatPaymentOptions}>
                         {paymentMethods.havale.map((option) => (
                           <button
@@ -939,11 +855,7 @@ export const WalletModal: FC<WalletModalProps> = ({ isOpen, onClose }) => {
                       </div>
                     </div>
                     <div className={styles.paymentMethodGroup}>
-                      <div className={styles.paymentMethodGroupHeader}>
-                        <div className={styles.paymentMethodGroupTitle}>
-                          <span className={styles.paymentMethodIcon}>💳</span> Sanal Cüzdan
-                        </div>
-                      </div>
+                      <div className={styles.paymentMethodGroupTitle}>Sanal Cüzdan</div>
                       <div className={styles.fiatPaymentOptions}>
                         {paymentMethods.sanal.map((option) => (
                           <button
@@ -959,11 +871,7 @@ export const WalletModal: FC<WalletModalProps> = ({ isOpen, onClose }) => {
                       </div>
                     </div>
                     <div className={styles.paymentMethodGroup}>
-                      <div className={styles.paymentMethodGroupHeader}>
-                        <div className={styles.paymentMethodGroupTitle}>
-                          <span className={styles.paymentMethodIcon}>🏦</span> Kredi Kartı
-                        </div>
-                      </div>
+                      <div className={styles.paymentMethodGroupTitle}>Kredi Kartı</div>
                       <div className={styles.fiatPaymentOptions}>
                         {paymentMethods.kredi.map((option) => (
                           <button
@@ -979,11 +887,7 @@ export const WalletModal: FC<WalletModalProps> = ({ isOpen, onClose }) => {
                       </div>
                     </div>
                     <div className={styles.paymentMethodGroup}>
-                      <div className={styles.paymentMethodGroupHeader}>
-                        <div className={styles.paymentMethodGroupTitle}>
-                          <span className={styles.paymentMethodIcon}>📱</span> QR
-                        </div>
-                      </div>
+                      <div className={styles.paymentMethodGroupTitle}>QR</div>
                       <div className={styles.fiatPaymentOptions}>
                         {paymentMethods.qr.map((option) => (
                           <button
@@ -1041,694 +945,201 @@ export const WalletModal: FC<WalletModalProps> = ({ isOpen, onClose }) => {
           </div>
         ) : isWithdrawView ? (
           <div className={styles.withdrawContent}>
-            {/* ---------------- Withdraw Tab System (Crypto / Fiat) ---------------- */}
-            <div className={styles.depositTabContainer} style={{ marginBottom: '20px' }}>
-              <button
-                className={`${styles.depositTabButton} ${
-                  selectedWithdrawSection === 'crypto' ? styles.activeTab : ''
-                }`}
-                onClick={() => setSelectedWithdrawSection('crypto')}
+            {/* ---------------- Withdraw Section ---------------- */}
+            <section className={styles.cryptoSelectionSection}>
+              <div
+                className={styles.cryptoSelector}
+                onClick={() => setWithdrawShowDropdown(!withdrawShowDropdown)}
               >
-                Crypto
-              </button>
-              <button
-                className={`${styles.depositTabButton} ${
-                  selectedWithdrawSection === 'fiat' ? styles.activeTab : ''
-                }`}
-                onClick={() => setSelectedWithdrawSection('fiat')}
-              >
-                Fiat
-              </button>
-            </div>
-
-            {selectedWithdrawSection === 'crypto' ? (
-              <>
-                {/* ---------------- Crypto Withdraw Section ---------------- */}
-                <section className={styles.cryptoSelectionSection}>
-                  <div
-                    className={styles.cryptoSelector}
-                    onClick={() => setWithdrawShowDropdown(!withdrawShowDropdown)}
-                  >
-                    <div className={styles.cryptoSelectorContent}>
-                      <div className={styles.cryptoLeft}>
-                        <img
-                          src={withdrawSelectedCrypto.icon}
-                          alt={`${withdrawSelectedCrypto.name} icon`}
-                          className={styles.currencyIcon}
-                          style={{ backgroundColor: withdrawSelectedCrypto.color }}
-                        />
-                        <span className={styles.currencyCode}>
-                          {withdrawSelectedCrypto.code} ({withdrawSelectedCrypto.name})
-                        </span>
-                      </div>
-                      <div className={styles.cryptoBalance}>
-                        <span className={styles.withdrawBalanceValue}>
-                          {withdrawBalance.toFixed(8)} {withdrawSelectedCrypto.code}
-                        </span>
-                        <br />
-                        <span className={styles.withdrawUsdValue}>$0.00 USD</span>
-                      </div>
-                    </div>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      className={styles.dropdownArrow}
-                      style={{ width: 20, height: 20 }}
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    {withdrawShowDropdown && (
-                      <div
-                        className={styles.dropdownMenu}
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <input
-                          type="text"
-                          placeholder="Search cryptocurrency"
-                          value={withdrawSearchQuery}
-                          onChange={(e) => setWithdrawSearchQuery(e.target.value)}
-                          className={styles.searchInput}
-                        />
-                        <div className={styles.dropdownList}>
-                          {filteredWithdrawCurrencies.map((currency) => (
-                            <div
-                              key={currency.code}
-                              className={styles.dropdownItem}
-                              onClick={() => {
-                                setWithdrawSelectedCrypto(currency);
-                                const networks = networkMapping[currency.code] || [];
-                                setSelectedWithdrawNetwork(networks[0]);
-                                setWithdrawShowDropdown(false);
-                              }}
-                            >
-                              <img
-                                src={currency.icon}
-                                alt={`${currency.name} icon`}
-                                className={styles.currencyIcon}
-                                style={{ backgroundColor: currency.color }}
-                              />
-                              <span>
-                                {currency.code} - {currency.name}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </section>
-
-                <p className={styles.dropdownTitle}>Network</p>
-                <section className={styles.networkSelectionSection}>
-                  <div
-                    className={styles.networkSelector}
-                    onClick={() =>
-                      setShowWithdrawNetworkDropdown(!showWithdrawNetworkDropdown)
-                    }
-                  >
-                    <span className={styles.networkName}>
-                      {selectedWithdrawNetwork.code} ({selectedWithdrawNetwork.name})
-                    </span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      className={styles.dropdownArrow}
-                      style={{ width: 20, height: 20 }}
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    {showWithdrawNetworkDropdown && (
-                      <div
-                        className={styles.dropdownMenu}
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <input
-                          type="text"
-                          placeholder="Search network"
-                          value={withdrawNetworkSearchQuery}
-                          onChange={(e) => setWithdrawNetworkSearchQuery(e.target.value)}
-                          className={styles.searchInput}
-                        />
-                        <div className={styles.dropdownList}>
-                          {filteredWithdrawNetworks.map((network) => (
-                            <div
-                              key={network.code}
-                              className={styles.dropdownItem}
-                              onClick={() => {
-                                setSelectedWithdrawNetwork(network);
-                                setShowWithdrawNetworkDropdown(false);
-                              }}
-                            >
-                              <span>
-                                {network.code} - {network.name}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </section>
-
-                <section className={styles.withdrawAmountSection}>
-                  <label className={styles.withdrawAmountLabel}>Amount to withdraw *</label>
-                  <div className={styles.withdrawAmountContainer}>
-                    <input
-                      type="number"
-                      placeholder="0.00000000"
-                      value={withdrawAmount}
-                      onChange={(e) => setWithdrawAmount(e.target.value)}
-                      className={styles.withdrawAmountInput}
+                <div className={styles.cryptoSelectorContent}>
+                  <div className={styles.cryptoLeft}>
+                    <img
+                      src={withdrawSelectedCrypto.icon}
+                      alt={`${withdrawSelectedCrypto.name} icon`}
+                      className={styles.currencyIcon}
+                      style={{ backgroundColor: withdrawSelectedCrypto.color }}
                     />
-                    <button
-                      className={styles.maxButton}
-                      onClick={() => setWithdrawAmount(withdrawBalance.toString())}
-                    >
-                      Max
-                    </button>
+                    <span className={styles.currencyCode}>
+                      {withdrawSelectedCrypto.code} ({withdrawSelectedCrypto.name})
+                    </span>
                   </div>
-                  <div className={styles.balanceInfo}>
-                    <span>
+                  <div className={styles.cryptoBalance}>
+                    <span className={styles.withdrawBalanceValue}>
                       {withdrawBalance.toFixed(8)} {withdrawSelectedCrypto.code}
                     </span>
+                    <br />
+                    <span className={styles.withdrawUsdValue}>$0.00 USD</span>
                   </div>
-                </section>
-                <section className={styles.withdrawAddressSection}>
-                  <label className={styles.withdrawAddressLabel}>Withdraw to *</label>
-                  <div className={styles.withdrawAddressContainer}>
+                </div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  className={styles.dropdownArrow}
+                  style={{ width: 20, height: 20 }}
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                {withdrawShowDropdown && (
+                  <div
+                    className={styles.dropdownMenu}
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <input
                       type="text"
-                      placeholder="Enter your address"
-                      value={withdrawAddress}
-                      onChange={(e) => setWithdrawAddress(e.target.value)}
-                      className={styles.withdrawAddressInput}
+                      placeholder="Search cryptocurrency"
+                      value={withdrawSearchQuery}
+                      onChange={(e) => setWithdrawSearchQuery(e.target.value)}
+                      className={styles.searchInput}
                     />
-                    <button className={styles.pasteButton} onClick={pasteAddress}>
-                      Paste
-                    </button>
-                  </div>
-                </section>
-                <section className={styles.withdrawConditions}>
-                  <p>Minimum withdrawal: $2.01</p>
-                  <p>Transaction fee: $0.02 will be deducted</p>
-                </section>
-                <button
-                  className={styles.withdrawActionButton}
-                  disabled={isWithdrawDisabled}
-                >
-                  Withdraw
-                </button>
-                <section className={styles.securitySection}>
-                  <p className={styles.securityNotice}>
-                    Improve your account security with Two-Factor Authentication
-                  </p>
-                  <button className={styles.enable2FAButton}>Enable 2FA</button>
-                </section>
-              </>
-            ) : (
-              <>
-                {/* ---------------- Fiat Withdraw Section ---------------- */}
-                {fiatWithdrawStep === 0 && (
-                  <div className={styles.fiatActivationPrompt}>
-                    <h3>Activate Fiat Withdrawals</h3>
-                    <p>Complete your wallet setup to enable fiat withdrawals.</p>
-                    <button
-                      className={styles.activateFiatButton}
-                      onClick={() => setFiatWithdrawStep(1)}
-                    >
-                      Activate Fiat Withdraw
-                    </button>
-                  </div>
-                )}
-                {fiatWithdrawStep === 1 && (
-                  <div className={styles.fiatActivationForm}>
-                    <h3 className={styles.fiatTitle}>
-                      Enable Turkish Lira Withdrawals
-                    </h3>
-                    <p>
-                      Provide extra information to use fiat withdrawals.  
-                      You can activate this at any time.
-                    </p>
-                    <div className={styles.fiatFormContainer}>
-                      <div className={styles.switchContainer}>
-                        <span>Activate Turkish Lira (Withdraw)</span>
-                        <label className={styles.switch}>
-                          <input
-                            type="checkbox"
-                            checked={activateTLWithdraw}
-                            onChange={(e) => setActivateTLWithdraw(e.target.checked)}
-                          />
-                          <span className={styles.slider}></span>
-                        </label>
-                      </div>
-                      <label>
-                        National Identification Number
-                        <input
-                          type="number"
-                          value={withdrawNationalId}
-                          onChange={(e) => setWithdrawNationalId(e.target.value)}
-                          placeholder="Enter your National ID"
-                        />
-                      </label>
-                      <label>Expiration Date of your National ID card</label>
-                      {/* Day / Month / Year */}
-                      <div className={styles.dayMonthYearRow}>
-                        {/* Day Picker */}
+                    <div className={styles.dropdownList}>
+                      {filteredWithdrawCurrencies.map((currency) => (
                         <div
-                          className={styles.dayMonthYearDropdown}
-                          onClick={() => setShowWithdrawDayDropdown(!showWithdrawDayDropdown)}
-                        >
-                          <span className={styles.currencyCode}>
-                            {wIdExpDay || 'Day'}
-                          </span>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            className={styles.dropdownArrow}
-                            style={{ width: 20, height: 20 }}
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                          {showWithdrawDayDropdown && (
-                            <div
-                              className={styles.dropdownMenu}
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              <div className={styles.dropdownList}>
-                                {days.map((dayValue) => (
-                                  <div
-                                    key={dayValue}
-                                    className={styles.dropdownItem}
-                                    onClick={() => {
-                                      setWIdExpDay(dayValue);
-                                      setShowWithdrawDayDropdown(false);
-                                    }}
-                                  >
-                                    {dayValue}
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-                        </div>
-
-                        {/* Month Picker */}
-                        <div
-                          className={styles.dayMonthYearDropdown}
-                          onClick={() => setShowWithdrawMonthDropdown(!showWithdrawMonthDropdown)}
-                        >
-                          <span className={styles.currencyCode}>
-                            {wIdExpMonth || 'Month'}
-                          </span>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            className={styles.dropdownArrow}
-                            style={{ width: 20, height: 20 }}
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                          {showWithdrawMonthDropdown && (
-                            <div
-                              className={styles.dropdownMenu}
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              <div className={styles.dropdownList}>
-                                {months.map((monthValue) => (
-                                  <div
-                                    key={monthValue}
-                                    className={styles.dropdownItem}
-                                    onClick={() => {
-                                      setWIdExpMonth(monthValue);
-                                      setShowWithdrawMonthDropdown(false);
-                                    }}
-                                  >
-                                    {monthValue}
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-                        </div>
-
-                        {/* Year Picker */}
-                        <div
-                          className={styles.dayMonthYearDropdown}
-                          onClick={() => setShowWithdrawYearDropdown(!showWithdrawYearDropdown)}
-                        >
-                          <span className={styles.currencyCode}>
-                            {wIdExpYear || 'Year'}
-                          </span>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            className={styles.dropdownArrow}
-                            style={{ width: 20, height: 20 }}
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                          {showWithdrawYearDropdown && (
-                            <div
-                              className={styles.dropdownMenu}
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              <div className={styles.dropdownList}>
-                                {years.map((yearValue) => (
-                                  <div
-                                    key={yearValue}
-                                    className={styles.dropdownItem}
-                                    onClick={() => {
-                                      setWIdExpYear(yearValue);
-                                      setShowWithdrawYearDropdown(false);
-                                    }}
-                                  >
-                                    {yearValue}
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Phone Number + Region */}
-                      <label style={{ marginTop: '10px' }}>Phone Number</label>
-                      <div className={styles.phoneRegionRow}>
-                        {/* Phone region dropdown */}
-                        <div
-                          className={styles.phoneRegionDropdown}
-                          onClick={() =>
-                            setShowWithdrawPhoneRegionDropdown(!showWithdrawPhoneRegionDropdown)
-                          }
-                        >
-                          <span className={styles.currencyCode}>
-                            {selectedWithdrawPhoneRegion}
-                          </span>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            className={styles.dropdownArrow}
-                            style={{ width: 20, height: 20 }}
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                          {showWithdrawPhoneRegionDropdown && (
-                            <div
-                              className={styles.dropdownMenu}
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              <div className={styles.dropdownList}>
-                                {phoneRegions.map((region) => (
-                                  <div
-                                    key={region.code}
-                                    className={styles.dropdownItem}
-                                    onClick={() => {
-                                      setSelectedWithdrawPhoneRegion(region.code);
-                                      setShowWithdrawPhoneRegionDropdown(false);
-                                    }}
-                                  >
-                                    {region.label}
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-                        </div>
-
-                        <input
-                          type="number"
-                          value={withdrawPhoneNumber}
-                          onChange={(e) => setWithdrawPhoneNumber(e.target.value)}
-                          placeholder="Enter your phone number"
-                          className={styles.phoneNumberInput}
-                        />
-                      </div>
-                    </div>
-                    <button
-                      className={styles.saveAndContinueButton}
-                      onClick={() => setFiatWithdrawStep(2)}
-                      disabled={!isFiatWithdrawFormValid}
-                    >
-                      Save and Continue
-                    </button>
-                  </div>
-                )}
-                {fiatWithdrawStep === 2 && (
-                  <div className={styles.fiatDepositOptionScreen}>
-                    <h3>Select Fiat Currency</h3>
-                    <div
-                      className={styles.cryptoSelectionSection}
-                      style={{ marginBottom: '15px' }}
-                    >
-                      <div
-                        className={styles.cryptoSelector}
-                        onClick={() =>
-                          setShowFiatWithdrawCurrencyDropdown(!showFiatWithdrawCurrencyDropdown)
-                        }
-                      >
-                        {selectedFiatWithdrawCurrency ? (
-                          <>
-                            <img
-                              src={selectedFiatWithdrawCurrency.icon}
-                              alt={`${selectedFiatWithdrawCurrency.name} icon`}
-                              className={styles.currencyIcon}
-                              style={{ backgroundColor: selectedFiatWithdrawCurrency.color }}
-                            />
-                            <span className={styles.currencyCode}>
-                              {selectedFiatWithdrawCurrency.code} (
-                              {selectedFiatWithdrawCurrency.name})
-                            </span>
-                          </>
-                        ) : (
-                          <span className={styles.currencyCode}>Select a currency</span>
-                        )}
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                          className={styles.dropdownArrow}
-                          style={{ width: 20, height: 20 }}
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                        {showFiatWithdrawCurrencyDropdown && (
-                          <div
-                            className={styles.dropdownMenu}
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <input
-                              type="text"
-                              placeholder="Search fiat currency"
-                              value={fiatWithdrawSearchQuery}
-                              onChange={(e) => setFiatWithdrawSearchQuery(e.target.value)}
-                              className={styles.searchInput}
-                            />
-                            <div className={styles.dropdownList}>
-                              {filteredFiatWithdrawCurrencies.map((fc) => (
-                                <div
-                                  key={fc.code}
-                                  className={styles.dropdownItem}
-                                  onClick={() => {
-                                    setSelectedFiatWithdrawCurrency(fc);
-                                    setShowFiatWithdrawCurrencyDropdown(false);
-                                  }}
-                                >
-                                  <img
-                                    src={fc.icon}
-                                    alt={`${fc.name} icon`}
-                                    className={styles.currencyIcon}
-                                    style={{ backgroundColor: fc.color }}
-                                  />
-                                  <span>
-                                    {fc.code} - {fc.name}
-                                  </span>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <button
-                      className={styles.depositFiatButton}
-                      onClick={() => selectedFiatWithdrawCurrency && setFiatWithdrawStep(3)}
-                      disabled={!selectedFiatWithdrawCurrency}
-                    >
-                      Withdraw
-                    </button>
-                  </div>
-                )}
-                {fiatWithdrawStep === 3 && (
-                  <div className={styles.fiatPaymentSelection}>
-                    <h3 className={styles.fiatPaymentTitle}>
-                      Withdraw {selectedFiatWithdrawCurrency?.code || 'Fiat'}
-                    </h3>
-                    {/* Payment method groups (with some design improvements) */}
-                    <div className={styles.paymentMethodGroup}>
-                      <div className={styles.paymentMethodGroupHeader}>
-                        <div className={styles.paymentMethodGroupTitle}>
-                          <span className={styles.paymentMethodIcon}>💸</span> Havale
-                        </div>
-                      </div>
-                      <div className={styles.fiatPaymentOptions}>
-                        {paymentMethods.havale.map((option) => (
-                          <button
-                            key={option}
-                            className={`${styles.paymentOptionButton} ${
-                              fiatWithdrawPaymentOption === option
-                                ? styles.selectedPaymentOption
-                                : ''
-                            }`}
-                            onClick={() => setFiatWithdrawPaymentOption(option)}
-                          >
-                            {option}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                    <div className={styles.paymentMethodGroup}>
-                      <div className={styles.paymentMethodGroupHeader}>
-                        <div className={styles.paymentMethodGroupTitle}>
-                          <span className={styles.paymentMethodIcon}>💳</span> Sanal Cüzdan
-                        </div>
-                      </div>
-                      <div className={styles.fiatPaymentOptions}>
-                        {paymentMethods.sanal.map((option) => (
-                          <button
-                            key={option}
-                            className={`${styles.paymentOptionButton} ${
-                              fiatWithdrawPaymentOption === option
-                                ? styles.selectedPaymentOption
-                                : ''
-                            }`}
-                            onClick={() => setFiatWithdrawPaymentOption(option)}
-                          >
-                            {option}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                    <div className={styles.paymentMethodGroup}>
-                      <div className={styles.paymentMethodGroupHeader}>
-                        <div className={styles.paymentMethodGroupTitle}>
-                          <span className={styles.paymentMethodIcon}>🏦</span> Kredi Kartı
-                        </div>
-                      </div>
-                      <div className={styles.fiatPaymentOptions}>
-                        {paymentMethods.kredi.map((option) => (
-                          <button
-                            key={option}
-                            className={`${styles.paymentOptionButton} ${
-                              fiatWithdrawPaymentOption === option
-                                ? styles.selectedPaymentOption
-                                : ''
-                            }`}
-                            onClick={() => setFiatWithdrawPaymentOption(option)}
-                          >
-                            {option}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                    <div className={styles.paymentMethodGroup}>
-                      <div className={styles.paymentMethodGroupHeader}>
-                        <div className={styles.paymentMethodGroupTitle}>
-                          <span className={styles.paymentMethodIcon}>📱</span> QR
-                        </div>
-                      </div>
-                      <div className={styles.fiatPaymentOptions}>
-                        {paymentMethods.qr.map((option) => (
-                          <button
-                            key={option}
-                            className={`${styles.paymentOptionButton} ${
-                              fiatWithdrawPaymentOption === option
-                                ? styles.selectedPaymentOption
-                                : ''
-                            }`}
-                            onClick={() => setFiatWithdrawPaymentOption(option)}
-                          >
-                            {option}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                    {/* After picking a payment method, show amount input */}
-                    {fiatWithdrawPaymentOption && (
-                      <div className={styles.fiatAmountSelection}>
-                        <h4>Withdraw Amount</h4>
-                        <div className={styles.presetAmounts}>
-                          <button onClick={() => setFiatWithdrawAmount('1000')}>1,000</button>
-                          <button onClick={() => setFiatWithdrawAmount('5000')}>5,000</button>
-                          <button onClick={() => setFiatWithdrawAmount('30000')}>30,000</button>
-                        </div>
-                        <label>
-                          Withdraw Amount
-                          <input
-                            type="number"
-                            value={fiatWithdrawAmount}
-                            onChange={(e) => setFiatWithdrawAmount(e.target.value)}
-                            placeholder="Enter amount"
-                          />
-                        </label>
-                        <p>Minimum: TRY 1,000 &nbsp;&nbsp; Maximum: TRY 30,000</p>
-                        <button
-                          className={styles.finalFiatDepositButton}
+                          key={currency.code}
+                          className={styles.dropdownItem}
                           onClick={() => {
-                            alert(
-                              `Withdrawing ${fiatWithdrawAmount} ${selectedFiatWithdrawCurrency?.code} via ${fiatWithdrawPaymentOption}`
-                            );
+                            setWithdrawSelectedCrypto(currency);
+                            const networks = networkMapping[currency.code] || [];
+                            setSelectedWithdrawNetwork(networks[0]);
+                            setWithdrawShowDropdown(false);
                           }}
-                          disabled={
-                            !fiatWithdrawAmount ||
-                            parseFloat(fiatWithdrawAmount) < 1000 ||
-                            parseFloat(fiatWithdrawAmount) > 30000
-                          }
                         >
-                          Withdraw
-                        </button>
-                      </div>
-                    )}
+                          <img
+                            src={currency.icon}
+                            alt={`${currency.name} icon`}
+                            className={styles.currencyIcon}
+                            style={{ backgroundColor: currency.color }}
+                          />
+                          <span>
+                            {currency.code} - {currency.name}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 )}
-              </>
-            )}
+              </div>
+            </section>
+
+            <p className={styles.dropdownTitle}>Network</p>
+            <section className={styles.networkSelectionSection}>
+              <div
+                className={styles.networkSelector}
+                onClick={() =>
+                  setShowWithdrawNetworkDropdown(!showWithdrawNetworkDropdown)
+                }
+              >
+                <span className={styles.networkName}>
+                  {selectedWithdrawNetwork.code} ({selectedWithdrawNetwork.name})
+                </span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  className={styles.dropdownArrow}
+                  style={{ width: 20, height: 20 }}
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                {showWithdrawNetworkDropdown && (
+                  <div
+                    className={styles.dropdownMenu}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <input
+                      type="text"
+                      placeholder="Search network"
+                      value={withdrawNetworkSearchQuery}
+                      onChange={(e) => setWithdrawNetworkSearchQuery(e.target.value)}
+                      className={styles.searchInput}
+                    />
+                    <div className={styles.dropdownList}>
+                      {filteredWithdrawNetworks.map((network) => (
+                        <div
+                          key={network.code}
+                          className={styles.dropdownItem}
+                          onClick={() => {
+                            setSelectedWithdrawNetwork(network);
+                            setShowWithdrawNetworkDropdown(false);
+                          }}
+                        >
+                          <span>
+                            {network.code} - {network.name}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </section>
+
+            <section className={styles.withdrawAmountSection}>
+              <label className={styles.withdrawAmountLabel}>Amount to withdraw *</label>
+              <div className={styles.withdrawAmountContainer}>
+                <input
+                  type="number"
+                  placeholder="0.00000000"
+                  value={withdrawAmount}
+                  onChange={(e) => setWithdrawAmount(e.target.value)}
+                  className={styles.withdrawAmountInput}
+                />
+                <button
+                  className={styles.maxButton}
+                  onClick={() => setWithdrawAmount(withdrawBalance.toString())}
+                >
+                  Max
+                </button>
+              </div>
+              <div className={styles.balanceInfo}>
+                <span>
+                  {withdrawBalance.toFixed(8)} {withdrawSelectedCrypto.code}
+                </span>
+              </div>
+            </section>
+            <section className={styles.withdrawAddressSection}>
+              <label className={styles.withdrawAddressLabel}>Withdraw to *</label>
+              <div className={styles.withdrawAddressContainer}>
+                <input
+                  type="text"
+                  placeholder="Enter your address"
+                  value={withdrawAddress}
+                  onChange={(e) => setWithdrawAddress(e.target.value)}
+                  className={styles.withdrawAddressInput}
+                />
+                <button className={styles.pasteButton} onClick={pasteAddress}>
+                  Paste
+                </button>
+              </div>
+            </section>
+            <section className={styles.withdrawConditions}>
+              <p>Minimum withdrawal: $2.01</p>
+              <p>Transaction fee: $0.02 will be deducted</p>
+            </section>
+            <button
+              className={styles.withdrawActionButton}
+              disabled={isWithdrawDisabled}
+            >
+              Withdraw
+            </button>
+            <section className={styles.securitySection}>
+              <p className={styles.securityNotice}>
+                Improve your account security with Two-Factor Authentication
+              </p>
+              <button className={styles.enable2FAButton}>Enable 2FA</button>
+            </section>
           </div>
         ) : (
           <>
+            
             {/* ---------------- Default Wallet Overview ---------------- */}
             <section className={styles.currencySection}>
               <h3 className={styles.sectionTitle}>Your Currencies</h3>
