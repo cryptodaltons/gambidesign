@@ -1,4 +1,7 @@
-/* Animation: fade and scale in */
+/* ---------------------------------
+   Animations
+------------------------------------ */
+/* Fade & scale in */
 @keyframes fadeScaleIn {
   0% {
     opacity: 0;
@@ -10,46 +13,56 @@
   }
 }
 
-/* Overlay with backdrop blur */
+/* ---------------------------------
+   Modal Overlay
+------------------------------------ */
 .modalOverlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(4px);
+  inset: 0; /* top, right, bottom, left all 0 */
   display: flex;
   justify-content: center;
   align-items: center;
-  /* Slightly lower than modalContent */
+
+  /* A bit lighter overlay + blur for a glassy look */
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+
   z-index: 999;
+
   animation: fadeScaleIn 0.4s ease-out;
 }
 
-/* Modal content with glassmorphism effect */
+/* ---------------------------------
+   Modal Content
+------------------------------------ */
 .modalContent {
-  background: rgba(25, 33, 50, 0.85);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  padding: 30px;
-  width: 90%;
-  max-width: 600px;
-  max-height: 90vh;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
-  color: #f0f0f0;
-  font-family: 'Roboto', sans-serif;
+  position: relative; /* so z-index works on dropdowns */
+  z-index: 2000;
+
   display: flex;
   flex-direction: column;
+  width: 90%;
+  max-width: 600px;
+  max-height: 85vh; /* slightly less tall for breathing room */
+  overflow-y: auto;
+
+  /* Glassmorphism background */
+  background: rgba(28, 40, 60, 0.75);
+  backdrop-filter: blur(12px);
+
+  /* Softer border & bigger shadow */
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  box-shadow: 0 8px 60px rgba(0, 0, 0, 0.6);
+
+  padding: 30px;
+  color: #f5f5f5;
+  font-family: 'Roboto', sans-serif;
+
   animation: fadeScaleIn 0.4s ease-out;
-  /* Make it above .modalOverlay and create a stacking context */
-  position: relative;
-  z-index: 2000;
-  /* So dropdowns won't get clipped */
-  overflow: visible;
 }
 
+/* Optional custom scroll bar for the modal body (vertical only) */
 .modalContent::-webkit-scrollbar {
   width: 8px;
 }
@@ -58,19 +71,17 @@
   border-radius: 8px;
 }
 
-/* Header */
+/* ---------------------------------
+   Header
+------------------------------------ */
 .modalHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-  padding-bottom: 15px;
-  margin-bottom: 20px;
-}
 
-.titleContainer {
-  display: flex;
-  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
 }
 
 .goBackButton {
@@ -97,7 +108,7 @@
 }
 
 .title {
-  font-size: 26px;
+  font-size: 24px;
   margin: 0;
   font-weight: 500;
 }
@@ -110,39 +121,34 @@
   cursor: pointer;
   transition: transform 0.3s ease, color 0.3s ease;
 }
-
 .closeButton:hover {
   transform: rotate(90deg);
   color: #ff6b6b;
 }
 
-/* Wallet Overview */
+/* ---------------------------------
+   Default Wallet Overview
+------------------------------------ */
 .currencySection {
   margin-bottom: 25px;
 }
-
 .sectionTitle {
-  font-size: 20px;
-  margin-bottom: 15px;
+  font-size: 18px;
   font-weight: 500;
   border-left: 4px solid #0cd444;
   padding-left: 8px;
+  margin-bottom: 15px;
 }
 
 .currencyContainer {
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.07);
   border-radius: 12px;
   padding: 10px;
   max-height: 250px;
   overflow-y: auto;
 }
-
 .currencyContainer::-webkit-scrollbar {
-  width: 8px;
-}
-.currencyContainer::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  width: 6px;
 }
 .currencyContainer::-webkit-scrollbar-thumb {
   background: #0cd444;
@@ -159,17 +165,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px;
-  border-radius: 8px;
   background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .currencyInfo {
   display: flex;
   align-items: center;
 }
-
 .currencyIcon {
   width: 40px;
   height: 40px;
@@ -178,109 +183,103 @@
   background: #111;
   padding: 4px;
 }
-
 .currencyText {
   display: flex;
   flex-direction: column;
 }
-
 .currencyCode {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
-  color: #f0f0f0;
+  color: #f5f5f5;
 }
-
 .currencyLabel {
-  font-size: 14px;
+  font-size: 13px;
   color: #ccc;
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 .balanceInfo {
   text-align: right;
 }
-
 .balanceValue {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
-  color: #f0f0f0;
+  color: #fff;
 }
-
 .usdValue {
-  font-size: 14px;
+  font-size: 13px;
   color: #ccc;
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
-/* Actions Section */
+/* ---------------------------------
+   Actions Section
+------------------------------------ */
 .actionsSection {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
   margin-bottom: 25px;
 }
-
 .actionButton {
   flex: 1 1 calc(50% - 16px);
   padding: 14px 0;
-  border-radius: 12px;
+  border-radius: 10px;
   border: none;
   cursor: pointer;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 15px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
 .primary {
   background: #0cd444;
   color: #fff;
 }
-
 .primary:hover {
   transform: translateY(-4px);
   box-shadow: 0 4px 20px rgba(12, 212, 68, 0.5);
 }
-
 .secondary {
   background: linear-gradient(45deg, #6c757d, #5a6268);
   color: #fff;
 }
-
 .secondary:hover {
   transform: translateY(-4px);
   box-shadow: 0 4px 20px rgba(106, 117, 125, 0.5);
 }
 
-/* Security Section */
+/* ---------------------------------
+   Security Section
+------------------------------------ */
 .securitySection {
   text-align: center;
   border-top: 1px solid rgba(255, 255, 255, 0.15);
   padding-top: 20px;
+  margin-top: auto; /* push to bottom if needed */
 }
-
 .securityNotice {
-  font-size: 16px;
+  font-size: 15px;
   color: #ddd;
   margin-bottom: 15px;
 }
-
 .enable2FAButton {
   background: linear-gradient(45deg, #6c757d, #5a6268);
   border: none;
-  border-radius: 12px;
+  border-radius: 8px;
   color: #fff;
-  padding: 12px 24px;
+  padding: 10px 24px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 15px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
 .enable2FAButton:hover {
   transform: translateY(-4px);
   box-shadow: 0 4px 20px rgba(106, 117, 125, 0.5);
 }
 
-/* -------------------- Deposit View Styles -------------------- */
+/* ---------------------------------
+   Deposit Content
+------------------------------------ */
 .depositContent {
   display: flex;
   flex-direction: column;
@@ -290,85 +289,86 @@
 .depositTabContainer {
   display: flex;
   margin-bottom: 20px;
+  border: 1px solid #0cd444;
+  border-radius: 8px;
+  overflow: hidden;
 }
-
 .depositTabButton {
   flex: 1;
   padding: 10px;
-  border: 1px solid #0cd444;
   background: transparent;
   color: #f0f0f0;
   cursor: pointer;
   font-size: 16px;
-  transition: background 0.3s ease;
+  border: none;
+  transition: background 0.3s ease, color 0.3s;
 }
-
-.depositTabButton:not(:last-child) {
-  border-right: none;
+.depositTabButton + .depositTabButton {
+  border-left: 1px solid #0cd444;
 }
-
 .activeTab {
   background: #0cd444;
   color: #fff;
 }
 
-/* -------------------- Crypto Selection -------------------- */
+/* ---------------------------------
+   Crypto Selection (Deposit/Withdraw)
+------------------------------------ */
 .cryptoSelectionSection {
   margin-bottom: 20px;
-  /* position: relative;  <-- Removed so it's not the reference for the dropdowns */
 }
 
 .cryptoSelector {
+  position: relative; /* anchor for dropdown */
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(0, 0, 0, 0.2);
+
+  background: rgba(255, 255, 255, 0.07);
   padding: 10px;
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.3s ease;
-  position: relative; /* Important: this is now the dropdown anchor */
 }
-
 .cryptoSelector:hover {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.1);
 }
-
 .cryptoSelectorContent {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100;
+  width: 600px;
 }
-
 .cryptoLeft {
   display: flex;
   align-items: center;
   gap: 12px;
 }
-
 .cryptoBalance {
   text-align: right;
 }
 
-/* Dropdown Arrow */
 .dropdownArrow {
   margin-left: 8px;
+  flex-shrink: 0; /* so arrow doesn't shrink if text is long */
 }
 
-/* Dropdown Menu (modified for correct anchoring) */
+/* ---------------------------------
+   Common Dropdown Menu
+------------------------------------ */
 .dropdownMenu {
   position: absolute;
   top: 100%;
   left: 0;
-  margin-top: 4px;
   width: 100%;
-  background: #192132;
+
+  margin-top: 4px;
   padding: 10px;
   border-radius: 8px;
-  /* High z-index so it appears on top */
-  z-index: 9999;
+  background: rgba(25, 33, 50, 0.95);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+  z-index: 9999;
 }
 
 .searchInput {
@@ -376,6 +376,12 @@
   padding: 8px;
   border-radius: 8px;
   border: none;
+  background: rgba(0, 0, 0, 0.2);
+  color: #f0f0f0;
+}
+.searchInput:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #0cd444;
 }
 
 .dropdownList {
@@ -383,52 +389,62 @@
   overflow-y: auto;
   margin-top: 8px;
 }
+/* Hide the scrollbar in dropdowns for a cleaner look */
+.dropdownList::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+.dropdownList {
+  scrollbar-width: none; /* for Firefox */
+}
+.dropdownList::-webkit-scrollbar-thumb {
+  background: transparent;
+}
 
 .dropdownItem {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 8px;
-  border-radius: 8px;
+
   background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 6px;
+
   cursor: pointer;
   transition: background 0.2s ease;
-  margin-bottom: 6px;
 }
-
 .dropdownItem:hover {
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* Deposit Address */
+/* ---------------------------------
+   Deposit Address
+------------------------------------ */
 .depositAddressSection {
   margin-bottom: 20px;
 }
-
 .depositAddressLabel {
-  font-size: 16px;
+  font-size: 15px;
+  font-weight: 600;
   margin-bottom: 8px;
-  font-weight: bold;
   color: #f0f0f0;
 }
-
 .depositAddressContainer {
   position: relative;
   display: flex;
   align-items: center;
   margin-bottom: 12px;
 }
-
 .depositAddressInput {
   width: 100%;
   padding: 10px 50px 10px 10px;
   border-radius: 8px;
   border: none;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.07);
   color: #f0f0f0;
-  font-size: 16px;
+  font-size: 15px;
 }
-
 .copyButton {
   position: absolute;
   right: 10px;
@@ -438,15 +454,16 @@
   cursor: pointer;
   font-size: 14px;
   font-weight: bold;
+  transition: color 0.2s ease;
 }
-
-/* QR Code */
+.copyButton:hover {
+  color: #09b83b;
+}
 .qrContainer {
   display: flex;
   justify-content: center;
   margin-bottom: 8px;
 }
-
 .qrImage {
   width: 150px;
   height: 150px;
@@ -454,37 +471,39 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
 }
-
 .qrInfo {
-  font-size: 14px;
+  font-size: 13px;
   color: #ccc;
   text-align: center;
 }
 
-/* Deposit Security */
+/* ---------------------------------
+   Deposit Security
+------------------------------------ */
 .depositSecuritySection {
   text-align: center;
   border-top: 1px solid rgba(255, 255, 255, 0.15);
   padding-top: 20px;
 }
 
-/* -------------------- Fiat Deposit Styles -------------------- */
+/* ---------------------------------
+   Fiat Deposit
+------------------------------------ */
 .dropdownTitle {
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 15px;
+  font-weight: 600;
   color: #f0f0f0;
   margin: 10px 0 8px;
 }
 
-/* Fiat Activation Prompt */
+/* Activation Prompt */
 .fiatActivationPrompt {
   text-align: center;
   padding: 20px;
-  border: 1px dashed #ccc;
+  border: 1px dashed rgba(255, 255, 255, 0.3);
   border-radius: 8px;
   margin-bottom: 20px;
 }
-
 .activateFiatButton {
   margin-top: 15px;
   padding: 12px;
@@ -497,93 +516,125 @@
   cursor: pointer;
   transition: background 0.3s ease;
 }
-
 .activateFiatButton:hover {
-  background: #0bbf40;
+  background: #09b83b;
 }
 
-/* Fiat Activation Form */
+/* Activation Form */
 .fiatActivationForm {
   padding: 15px;
-  border: 1px solid #ccc;
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 8px;
   margin-bottom: 20px;
 }
-
 .fiatTitle {
-  font-size: 20px;
+  font-size: 18px;
   margin-bottom: 10px;
   color: #f0f0f0;
 }
-
 .fiatFormContainer {
   display: flex;
   flex-direction: column;
   gap: 15px;
   margin: 15px 0;
 }
-
 .fiatFormContainer label {
   display: flex;
   flex-direction: column;
   font-size: 14px;
   color: #f0f0f0;
 }
-
-.fiatFormContainer input[type="text"],
-.fiatFormContainer input[type="number"],
+.fiatFormContainer input[type='text'],
+.fiatFormContainer input[type='number'],
 .fiatFormContainer select {
+  margin-top: 5px;
   padding: 8px;
   border-radius: 6px;
   border: none;
-  margin-top: 5px;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.07);
+  color: #f0f0f0;
+  font-size: 14px;
+}
+.fiatFormContainer input:focus,
+.fiatFormContainer select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #0cd444;
 }
 
-/* Additional fix: Place Day/Month/Year and phone region inline. */
-.customDropdownContainer {
+/* Day/Month/Year row */
+.dayMonthYearRow {
   display: flex;
-  align-items: center;
   gap: 8px;
   margin-bottom: 0;
 }
+.dayMonthYearDropdown {
+  flex: 1; /* each one is the same size */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-/* Each small dropdown is anchored individually */
-.customDropdownContainer .cryptoSelector {
-  flex: none;
+  background: rgba(255, 255, 255, 0.07);
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative; /* anchor for dropdown */
+}
+.dayMonthYearDropdown:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
 
-/* Let the phone number input stretch */
-.customDropdownContainer input {
+/* Phone Number + Region */
+.phoneRegionRow {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 0;
+}
+.phoneRegionDropdown {
+  flex: 0 0 110px; /* fixed width for region code */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.07);
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative; /* anchor for dropdown */
+}
+.phoneRegionDropdown:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.phoneNumberInput {
   flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255, 255, 255, 0.07);
+  color: #f0f0f0;
+  font-size: 14px;
 }
 
-/* Switch for Turkish Lira */
+/* Switch container */
 .switchContainer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 15px;
 }
-
 .switchContainer span {
   font-size: 16px;
   font-weight: bold;
 }
-
 .switch {
   position: relative;
   display: inline-block;
   width: 50px;
   height: 24px;
 }
-
 .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
-
 .slider {
   position: absolute;
   cursor: pointer;
@@ -592,10 +643,9 @@
   right: 0; 
   bottom: 0;
   background-color: #ccc;
-  transition: 0.4s;
   border-radius: 24px;
+  transition: 0.4s;
 }
-
 .slider:before {
   position: absolute;
   content: "";
@@ -604,19 +654,17 @@
   left: 3px; 
   bottom: 3px;
   background-color: white;
-  transition: 0.4s;
   border-radius: 50%;
+  transition: 0.4s;
 }
-
 .switch input:checked + .slider {
   background-color: #0cd444;
 }
-
 .switch input:checked + .slider:before {
   transform: translateX(26px);
 }
 
-/* Save and Continue Button */
+/* Save & Continue */
 .saveAndContinueButton {
   margin-top: 15px;
   padding: 12px;
@@ -629,25 +677,22 @@
   cursor: pointer;
   transition: background 0.3s ease;
 }
-
 .saveAndContinueButton:disabled {
   background: #555;
   cursor: not-allowed;
 }
-
 .saveAndContinueButton:hover:not(:disabled) {
-  background: #0bbf40;
+  background: #09b83b;
 }
 
-/* Fiat Deposit Option Screen (fiatStep 2) */
+/* Fiat Deposit Option Screen */
 .fiatDepositOptionScreen {
   text-align: center;
   padding: 20px;
-  border: 1px dashed #ccc;
+  border: 1px dashed rgba(255, 255, 255, 0.3);
   border-radius: 8px;
   margin-bottom: 20px;
 }
-
 .depositFiatButton {
   margin-top: 15px;
   padding: 12px;
@@ -660,37 +705,31 @@
   cursor: pointer;
   transition: background 0.3s ease;
 }
-
 .depositFiatButton:disabled {
   background: #555;
   cursor: not-allowed;
 }
-
 .depositFiatButton:hover:not(:disabled) {
-  background: #0bbf40;
+  background: #09b83b;
 }
 
+/* Fiat Payment Selection */
 .fiatPaymentSelection {
   padding: 15px;
-  border: 1px solid #ccc;
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 8px;
   margin-bottom: 20px;
-  /* Limit the height so it doesn't overflow the modal */
-  max-height: 600px;
-  /* Add scrolling if content exceeds that height */
+
+  max-height: 600px; /* limit height; scroll if too long */
   overflow-y: auto;
 }
-
-/* Optional custom scrollbar styling */
 .fiatPaymentSelection::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
-
 .fiatPaymentSelection::-webkit-scrollbar-thumb {
   background: #0cd444;
   border-radius: 8px;
 }
-
 
 .fiatPaymentTitle {
   font-size: 18px;
@@ -703,9 +742,8 @@
 .paymentMethodGroup {
   margin-bottom: 15px;
 }
-
 .paymentMethodGroupTitle {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: bold;
   margin-bottom: 8px;
   color: #f0f0f0;
@@ -717,19 +755,20 @@
   gap: 10px;
   margin-bottom: 10px;
 }
-
 .paymentOptionButton {
+  flex: 1;
   padding: 10px;
   border: 1px solid #0cd444;
   border-radius: 8px;
   background: transparent;
   color: #f0f0f0;
   cursor: pointer;
-  flex: 1;
   text-align: center;
   transition: background 0.3s ease;
 }
-
+.paymentOptionButton:hover {
+  background: rgba(12, 212, 68, 0.2);
+}
 .selectedPaymentOption {
   background: #0cd444;
   color: #fff;
@@ -739,20 +778,17 @@
 .fiatAmountSelection {
   margin-top: 15px;
 }
-
 .fiatAmountSelection h4 {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: bold;
   margin-bottom: 10px;
   color: #f0f0f0;
 }
-
 .presetAmounts {
   display: flex;
   gap: 10px;
   margin-bottom: 10px;
 }
-
 .presetAmounts button {
   flex: 1;
   padding: 10px;
@@ -764,11 +800,9 @@
   font-size: 14px;
   transition: background 0.3s ease;
 }
-
 .presetAmounts button:hover {
-  background: #0bbf40;
+  background: #09b83b;
 }
-
 .fiatAmountSelection label {
   display: flex;
   flex-direction: column;
@@ -776,14 +810,14 @@
   color: #f0f0f0;
   margin-bottom: 5px;
 }
-
-.fiatAmountSelection input[type="number"] {
+.fiatAmountSelection input[type='number'] {
   padding: 10px;
   border-radius: 8px;
   border: none;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.07);
+  color: #f0f0f0;
+  font-size: 14px;
 }
-
 .finalFiatDepositButton {
   margin-top: 10px;
   padding: 12px;
@@ -796,17 +830,17 @@
   cursor: pointer;
   transition: background 0.3s ease;
 }
-
 .finalFiatDepositButton:disabled {
   background: #555;
   cursor: not-allowed;
 }
-
 .finalFiatDepositButton:hover:not(:disabled) {
-  background: #0bbf40;
+  background: #09b83b;
 }
 
-/* -------------------- Withdraw View Styles -------------------- */
+/* ---------------------------------
+   Withdraw Content
+------------------------------------ */
 .withdrawContent {
   display: flex;
   flex-direction: column;
@@ -815,31 +849,31 @@
 .withdrawAmountSection {
   margin-bottom: 20px;
 }
-
 .withdrawAmountLabel {
-  font-size: 16px;
+  font-size: 15px;
+  font-weight: 600;
   margin-bottom: 8px;
-  font-weight: bold;
   color: #f0f0f0;
 }
-
 .withdrawAmountContainer {
   display: flex;
   align-items: center;
   gap: 10px;
   margin-bottom: 8px;
 }
-
 .withdrawAmountInput {
   flex: 1;
   padding: 10px;
   border-radius: 8px;
   border: none;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.07);
   color: #f0f0f0;
-  font-size: 16px;
+  font-size: 15px;
 }
-
+.withdrawAmountInput:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #0cd444;
+}
 .maxButton {
   padding: 10px 16px;
   border: none;
@@ -851,38 +885,41 @@
   font-weight: bold;
   transition: background 0.3s ease;
 }
-
 .maxButton:hover {
-  background: #0bbf40;
+  background: #09b83b;
+}
+.balanceInfo {
+  font-size: 14px;
+  color: #ccc;
 }
 
 .withdrawAddressSection {
   margin-bottom: 20px;
 }
-
 .withdrawAddressLabel {
-  font-size: 16px;
+  font-size: 15px;
+  font-weight: 600;
   margin-bottom: 8px;
-  font-weight: bold;
   color: #f0f0f0;
 }
-
 .withdrawAddressContainer {
   position: relative;
   display: flex;
   align-items: center;
 }
-
 .withdrawAddressInput {
   width: 100%;
   padding: 10px 50px 10px 10px;
   border-radius: 8px;
   border: none;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.07);
   color: #f0f0f0;
-  font-size: 16px;
+  font-size: 15px;
 }
-
+.withdrawAddressInput:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #0cd444;
+}
 .pasteButton {
   position: absolute;
   right: 10px;
@@ -892,14 +929,17 @@
   cursor: pointer;
   font-size: 14px;
   font-weight: bold;
+  transition: color 0.3s ease;
+}
+.pasteButton:hover {
+  color: #09b83b;
 }
 
 .withdrawConditions {
-  font-size: 14px;
+  font-size: 13px;
   color: #ccc;
   margin-bottom: 20px;
 }
-
 .withdrawConditions p {
   margin: 4px 0;
 }
@@ -915,63 +955,48 @@
   color: #fff;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
 .withdrawActionButton:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
-
 .withdrawActionButton:hover:not(:disabled) {
   transform: translateY(-4px);
   box-shadow: 0 4px 20px rgba(12, 212, 68, 0.5);
 }
 
 .withdrawBalanceValue {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
-  color: #f0f0f0;
+  color: #fff;
 }
-
 .withdrawUsdValue {
   font-size: 12px;
   color: #ccc;
 }
 
-/* -------------------- Network Selection -------------------- */
+/* ---------------------------------
+   Network Selection
+------------------------------------ */
 .networkSelectionSection {
   margin-bottom: 20px;
-  /* position: relative; <-- Removed so it's not the reference for the dropdowns */
 }
 
 .networkSelector {
+  position: relative; /* anchor for dropdown */
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.07);
   padding: 10px;
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.3s ease;
-  position: relative; /* Important: dropdown anchor */
 }
-
 .networkSelector:hover {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .networkName {
-  font-size: 16px;
+  font-size: 15px;
   color: #f0f0f0;
-}
-
-/* -------------------- Input Focus -------------------- */
-.searchInput:focus,
-.depositAddressInput:focus,
-.withdrawAmountInput:focus,
-.withdrawAddressInput:focus,
-.fiatFormContainer input[type="text"]:focus,
-.fiatFormContainer input[type="number"]:focus,
-.fiatFormContainer select:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px #0cd444;
 }

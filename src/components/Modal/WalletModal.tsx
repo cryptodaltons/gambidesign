@@ -416,7 +416,9 @@ export const WalletModal: FC<WalletModalProps> = ({ isOpen, onClose }) => {
                 <section className={styles.networkSelectionSection}>
                   <div
                     className={styles.networkSelector}
-                    onClick={() => setShowDepositNetworkDropdown(!showDepositNetworkDropdown)}
+                    onClick={() =>
+                      setShowDepositNetworkDropdown(!showDepositNetworkDropdown)
+                    }
                   >
                     <span className={styles.networkName}>
                       {selectedDepositNetwork.code} ({selectedDepositNetwork.name})
@@ -542,11 +544,11 @@ export const WalletModal: FC<WalletModalProps> = ({ isOpen, onClose }) => {
                         />
                       </label>
                       <label>Expiration Date of your National ID card</label>
-                      {/* Day/Month/Year all in one row */}
-                      <div className={styles.customDropdownContainer}>
+                      {/* Day / Month / Year in one row */}
+                      <div className={styles.dayMonthYearRow}>
                         {/* Day Picker */}
                         <div
-                          className={styles.cryptoSelector}
+                          className={styles.dayMonthYearDropdown}
                           onClick={() => setShowDayDropdown(!showDayDropdown)}
                         >
                           <span className={styles.currencyCode}>
@@ -590,7 +592,7 @@ export const WalletModal: FC<WalletModalProps> = ({ isOpen, onClose }) => {
 
                         {/* Month Picker */}
                         <div
-                          className={styles.cryptoSelector}
+                          className={styles.dayMonthYearDropdown}
                           onClick={() => setShowMonthDropdown(!showMonthDropdown)}
                         >
                           <span className={styles.currencyCode}>
@@ -634,7 +636,7 @@ export const WalletModal: FC<WalletModalProps> = ({ isOpen, onClose }) => {
 
                         {/* Year Picker */}
                         <div
-                          className={styles.cryptoSelector}
+                          className={styles.dayMonthYearDropdown}
                           onClick={() => setShowYearDropdown(!showYearDropdown)}
                         >
                           <span className={styles.currencyCode}>
@@ -679,11 +681,13 @@ export const WalletModal: FC<WalletModalProps> = ({ isOpen, onClose }) => {
 
                       {/* Phone Number + Region */}
                       <label style={{ marginTop: '10px' }}>Phone Number</label>
-                      <div className={styles.customDropdownContainer}>
+                      <div className={styles.phoneRegionRow}>
                         {/* Phone region dropdown */}
                         <div
-                          className={styles.cryptoSelector}
-                          onClick={() => setShowPhoneRegionDropdown(!showPhoneRegionDropdown)}
+                          className={styles.phoneRegionDropdown}
+                          onClick={() =>
+                            setShowPhoneRegionDropdown(!showPhoneRegionDropdown)
+                          }
                         >
                           <span className={styles.currencyCode}>
                             {selectedPhoneRegion}
@@ -1025,7 +1029,9 @@ export const WalletModal: FC<WalletModalProps> = ({ isOpen, onClose }) => {
             <section className={styles.networkSelectionSection}>
               <div
                 className={styles.networkSelector}
-                onClick={() => setShowWithdrawNetworkDropdown(!showWithdrawNetworkDropdown)}
+                onClick={() =>
+                  setShowWithdrawNetworkDropdown(!showWithdrawNetworkDropdown)
+                }
               >
                 <span className={styles.networkName}>
                   {selectedWithdrawNetwork.code} ({selectedWithdrawNetwork.name})
