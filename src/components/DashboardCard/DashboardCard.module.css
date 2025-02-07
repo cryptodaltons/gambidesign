@@ -11,9 +11,10 @@
     margin: 0 auto;
     gap: 24px;
     overflow: hidden;
-}
-
-.welcomeSection {
+  }
+  
+  /* LEFT SIDE – keep positions and colors intact */
+  .welcomeSection {
     width: 35%; 
     min-width: 350px;
     max-width: 400px;
@@ -21,30 +22,30 @@
     flex-direction: column;
     justify-content: space-evenly;
     padding: 16px;
-}
-
-.welcomeText {
+  }
+  
+  .welcomeText {
     margin: 0;
     font-size: 26px;
     font-weight: 700;
     background: #ffffff;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-}
-
-.progressWrapper {
+  }
+  
+  .progressWrapper {
     margin-top: 16px;
     bottom: -100px;
     position: relative;
-}
-
-.progressLabel {
+  }
+  
+  .progressLabel {
     font-size: 12px;
     font-weight: 500;
     color: #d1d5db;
-}
-
-.progressBar {
+  }
+  
+  .progressBar {
     position: relative;
     width: 100%;
     height: 14px;
@@ -52,36 +53,37 @@
     border-radius: 6px;
     overflow: hidden;
     margin-top: 8px;
-}
-
-.progressFill {
+  }
+  
+  .progressFill {
     height: 100%;
     background: linear-gradient(90deg, #00ff99, #00ccff);
     transition: width 0.3s ease-in-out;
-}
-
-.tierLabels {
+  }
+  
+  .tierLabels {
     display: flex;
     justify-content: space-between;
     margin-top: 8px;
-}
-
-.currentTier,
-.nextTier {
+  }
+  
+  .currentTier,
+  .nextTier {
     font-size: 14px;
     font-weight: bold;
     background: #ffffff;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-}
-
-.userName {
+  }
+  
+  .userName {
     background: linear-gradient(90deg, #07e942, #07e942);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-}
-
-.actionsWrapper {
+  }
+  
+  /* RIGHT SIDE – improved styling for the cards */
+  .actionsWrapper {
     flex: 1;
     overflow-x: auto; 
     overflow-y: hidden;
@@ -90,28 +92,20 @@
     scrollbar-width: none;
     cursor: grab;
     user-select: none;
-}
-
-.actionsWrapper::-webkit-scrollbar {
+  }
+  
+  .actionsWrapper::-webkit-scrollbar {
     display: none;
-}
-
-.actionsWrapper::-webkit-scrollbar-thumb {
-    background: linear-gradient(90deg, #374151, #64748b);
-    border-radius: 4px;
-}
-
-.actionsWrapper::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.actions {
+  }
+  
+  .actions {
     display: flex;
     gap: 24px;
     flex-wrap: nowrap;
-}
-
-.actionCard {
+    padding: 16px 0;
+  }
+  
+  .actionCard {
     flex: 0 0 250px;
     height: 280px;
     border-radius: 12px;
@@ -120,9 +114,15 @@
     position: relative;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     background: linear-gradient(135deg, #2c3e50, #4ca1af);
-}
-
-.actionCard img {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .actionCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+  }
+  
+  .cardImage {
     position: absolute;
     top: 0;
     left: 0;
@@ -131,16 +131,14 @@
     object-fit: cover;
     z-index: 0;
     pointer-events: none;
-}
-
-.actionCard h3,
-.actionCard p,
-.cardContent {
-    position: relative;
-    z-index: 1;
-}
-
-.cardContent {
+    transition: transform 0.3s ease;
+  }
+  
+  .actionCard:hover .cardImage {
+    transform: scale(1.05);
+  }
+  
+  .cardContent {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -154,22 +152,24 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-}
-
-.cardContent h3 {
+    transition: background 0.3s ease;
+  }
+  
+  .cardContent h3 {
     margin: 0;
     font-size: 18px;
     font-weight: bold;
     background: #ffffff;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-}
-
-.cardContent p {
+  }
+  
+  .cardContent p {
     margin: 4px 0 0;
     font-size: 14px;
     font-weight: 400;
     background: linear-gradient(90deg, #ffffff, #c2e9fb);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-}
+  }
+  

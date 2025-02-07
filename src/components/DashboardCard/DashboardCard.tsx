@@ -42,30 +42,31 @@ export const DashboardCard: React.FC<DashboardCardProps> = ({
     },
   ];
 
+  // Use refs for drag-to-scroll without triggering re-renders.
   const wrapperRef = useRef<HTMLDivElement>(null);
-  let isDragging = false;
-  let startX: number;
-  let scrollLeft: number;
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const scrollLeft = useRef(0);
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    isDragging = true;
+    isDragging.current = true;
     if (wrapperRef.current) {
       wrapperRef.current.style.cursor = 'grabbing';
-      startX = e.pageX - wrapperRef.current.offsetLeft;
-      scrollLeft = wrapperRef.current.scrollLeft;
+      startX.current = e.pageX - wrapperRef.current.offsetLeft;
+      scrollLeft.current = wrapperRef.current.scrollLeft;
     }
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isDragging || !wrapperRef.current) return;
+    if (!isDragging.current || !wrapperRef.current) return;
     e.preventDefault();
     const x = e.pageX - wrapperRef.current.offsetLeft;
-    const walk = x - startX;
-    wrapperRef.current.scrollLeft = scrollLeft - walk;
+    const walk = x - startX.current;
+    wrapperRef.current.scrollLeft = scrollLeft.current - walk;
   };
 
   const handleMouseUpOrLeave = () => {
-    isDragging = false;
+    isDragging.current = false;
     if (wrapperRef.current) {
       wrapperRef.current.style.cursor = 'grab';
     }
@@ -73,6 +74,7 @@ export const DashboardCard: React.FC<DashboardCardProps> = ({
 
   return (
     <div className={styles.container}>
+      {/* LEFT SIDE – positions, layout, and colors unchanged */}
       <div className={styles.welcomeSection}>
         <h2 className={styles.welcomeText}>
           Welcome Back, <span className={styles.userName}>{userName}</span>
@@ -91,6 +93,7 @@ export const DashboardCard: React.FC<DashboardCardProps> = ({
           </div>
         </div>
       </div>
+      {/* RIGHT SIDE – action cards with improved interactions */}
       <div
         className={styles.actionsWrapper}
         ref={wrapperRef}
@@ -102,7 +105,11 @@ export const DashboardCard: React.FC<DashboardCardProps> = ({
         <div className={styles.actions}>
           {cards.map((card, index) => (
             <div key={index} className={styles.actionCard}>
-              <img src={card.img} alt={card.title} />
+              <img
+                src={card.img}
+                alt={card.title}
+                className={styles.cardImage}
+              />
               <div className={styles.cardContent}>
                 <h3>{card.title}</h3>
                 <p>{card.description}</p>

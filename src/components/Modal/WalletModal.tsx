@@ -119,6 +119,15 @@ export const WalletModal: FC<WalletModalProps> = ({ isOpen, onClose }) => {
   const [showDepositNetworkDropdown, setShowDepositNetworkDropdown] = useState(false);
   const [depositNetworkSearchQuery, setDepositNetworkSearchQuery] = useState('');
 
+   // ---------------- TIP STATES ----------------
+  const [isTipView, setTipView] = useState(false);
+  const [selectedTipCurrency, setSelectedTipCurrency] = useState<DepositCurrency>(depositCurrencies[0]);
+  const [tipDropdownVisible, setTipDropdownVisible] = useState(false);
+  const [tipSearchQuery, setTipSearchQuery] = useState('');
+  const [tipUsername, setTipUsername] = useState('');
+  const [tipAmount, setTipAmount] = useState('');
+
+
   // --- Deposit (Fiat) States ---
   // Tab system for deposit: "crypto" vs. "fiat"
   const [selectedDepositSection, setSelectedDepositSection] = useState<'crypto' | 'fiat'>('crypto');
@@ -281,6 +290,14 @@ export const WalletModal: FC<WalletModalProps> = ({ isOpen, onClose }) => {
       setSelectedFiatWithdrawCurrency(null);
       setShowFiatWithdrawCurrencyDropdown(false);
       setFiatWithdrawSearchQuery('');
+
+          // Reset tip states
+      setTipView(false);
+      setSelectedTipCurrency(depositCurrencies[0]);
+      setTipDropdownVisible(false);
+      setTipSearchQuery('');
+      setTipUsername('');
+      setTipAmount('');
     }
   }, [isOpen]);
 
@@ -350,12 +367,13 @@ export const WalletModal: FC<WalletModalProps> = ({ isOpen, onClose }) => {
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <header className={styles.modalHeader}>
-          {(isDepositView || isWithdrawView) && (
+          {(isDepositView || isWithdrawView || isTipView) && (
             <button
               className={styles.goBackButton}
               onClick={() => {
                 setDepositView(false);
                 setWithdrawView(false);
+                setTipView(false);
               }}
             >
               <svg
@@ -391,6 +409,8 @@ export const WalletModal: FC<WalletModalProps> = ({ isOpen, onClose }) => {
               ? 'Wallet / Deposit'
               : isWithdrawView
               ? 'Wallet / Withdraw'
+              : isTipView
+              ? 'Wallet / Tip'
               : 'Wallet'}
           </h2>
           <button className={styles.closeButton} onClick={onClose}>
@@ -1727,6 +1747,121 @@ export const WalletModal: FC<WalletModalProps> = ({ isOpen, onClose }) => {
               </>
             )}
           </div>
+        )  : isTipView ? (
+          <div className={styles.tipContent}>
+            {/* Crypto Currency Picker Dropdown */}
+            <section className={styles.cryptoSelectionSection}>
+              <div
+                className={styles.cryptoSelector}
+                onClick={() => setTipDropdownVisible(!tipDropdownVisible)}
+              >
+                <img
+                  src={selectedTipCurrency.icon}
+                  alt={`${selectedTipCurrency.name} icon`}
+                  className={styles.currencyIcon}
+                  style={{ backgroundColor: selectedTipCurrency.color }}
+                />
+                <span className={styles.currencyCode}>
+                  {selectedTipCurrency.code} ({selectedTipCurrency.name})
+                </span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  className={styles.dropdownArrow}
+                  style={{ width: 20, height: 20 }}
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                {tipDropdownVisible && (
+                  <div
+                    className={styles.dropdownMenu}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <input
+                      type="text"
+                      placeholder="Search cryptocurrency"
+                      value={tipSearchQuery}
+                      onChange={(e) => setTipSearchQuery(e.target.value)}
+                      className={styles.searchInput}
+                    />
+                    <div className={styles.dropdownList}>
+                      {depositCurrencies
+                        .filter((currency) =>
+                          currency.name
+                            .toLowerCase()
+                            .includes(tipSearchQuery.toLowerCase()) ||
+                          currency.code
+                            .toLowerCase()
+                            .includes(tipSearchQuery.toLowerCase())
+                        )
+                        .map((currency) => (
+                          <div
+                            key={currency.code}
+                            className={styles.dropdownItem}
+                            onClick={() => {
+                              setSelectedTipCurrency(currency);
+                              setTipDropdownVisible(false);
+                            }}
+                          >
+                            <img
+                              src={currency.icon}
+                              alt={`${currency.name} icon`}
+                              className={styles.currencyIcon}
+                              style={{ backgroundColor: currency.color }}
+                            />
+                            <span>
+                              {currency.code} - {currency.name}
+                            </span>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </section>
+        
+            {/* Who You're Tipping */}
+            <div className={styles.tipSection}>
+              <label className={styles.tipLabel}>Who you're tipping</label>
+              <input
+                type="text"
+                placeholder="Enter username"
+                value={tipUsername}
+                onChange={(e) => setTipUsername(e.target.value)}
+                className={styles.tipInput}
+              />
+            </div>
+        
+            {/* Amount to Tip */}
+            <div className={styles.tipSection}>
+              <label className={styles.tipLabel}>Amount to Tip</label>
+              <input
+                type="number"
+                placeholder="Enter amount"
+                value={tipAmount}
+                onChange={(e) => setTipAmount(e.target.value)}
+                className={styles.tipInput}
+              />
+            </div>
+        
+            {/* Tip Now Button */}
+            <button
+              className={styles.tipNowButton}
+              onClick={() =>
+                alert(
+                  `Tipping ${tipAmount} ${selectedTipCurrency.code} to ${tipUsername}`
+                )
+              }
+              disabled={!tipAmount || !tipUsername}
+            >
+              Tip Now
+            </button>
+          </div>
         ) : (
           <>
             {/* ---------------- Default Wallet Overview ---------------- */}
@@ -1778,12 +1913,12 @@ export const WalletModal: FC<WalletModalProps> = ({ isOpen, onClose }) => {
               >
                 Withdraw
               </button>
-              <button className={`${styles.actionButton} ${styles.secondary}`}>
-                Buy Crypto
-              </button>
-              <button className={`${styles.actionButton} ${styles.secondary}`}>
-                Tip
-              </button>
+              <button
+                 className={`${styles.actionButton} ${styles.secondary}`}
+                 onClick={() => setTipView(true)}
+      >
+                 Tip
+               </button>
             </section>
             <section className={styles.securitySection}>
               <p className={styles.securityNotice}>

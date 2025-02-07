@@ -1000,3 +1000,53 @@
   font-size: 15px;
   color: #f0f0f0;
 }
+
+/* ---------------- TIP VIEW STYLES ---------------- */
+.tipContent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.tipSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.tipLabel {
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #f0f0f0;
+}
+
+.tipInput {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255, 255, 255, 0.07);
+  color: #f0f0f0;
+  font-size: 15px;
+}
+
+.tipNowButton {
+  padding: 14px 0;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  background: #0cd444;
+  color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tipNowButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.tipNowButton:hover:not(:disabled) {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 20px rgba(12, 212, 68, 0.5);
+}
+

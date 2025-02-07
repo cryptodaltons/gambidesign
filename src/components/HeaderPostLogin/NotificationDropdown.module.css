@@ -1,0 +1,123 @@
+/* notificationDropdown.module.css */
+
+/* Compact glassmorphism container */
+.dropdownContainer {
+    background: rgba(28, 40, 60, 0.75);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    padding: 16px;
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 10000;
+    animation: fadeIn 0.25s ease-out;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Header with refined typography */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  
+  .headerTitle {
+    font-size: 1.5rem;
+    font-weight: 700; /* More bold */
+    color: #ffffff;
+  }
+  
+  .clearAllButton {
+    background: none;
+    border: none;
+    color: #cccccc;
+    font-size: 0.9rem;
+    cursor: pointer;
+    /* Static appearance—no hover effect */
+  }
+  
+  /* Divider line */
+  .divider {
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin-bottom: 12px;
+  }
+  
+  /* Notifications content container */
+  .notificationsContent {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  /* When no notifications exist */
+  .noNotifications {
+    text-align: center;
+    padding: 12px 0;
+  }
+  
+  .noNotificationsTitle {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 4px;
+  }
+  
+  .noNotificationsDescription {
+    font-size: 1rem;
+    color: #cccccc;
+  }
+  
+  /* Each notification item */
+  .notificationItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 8px;
+  }
+  
+  .notificationItem:last-child {
+    border-bottom: none;
+  }
+  
+  /* Text container for notification title and message */
+  .textContent {
+    flex: 1;
+    margin-right: 8px;
+  }
+  
+  .notificationTitle {
+    font-size: 1.2rem;
+    font-weight: 700; /* More bold */
+    color: #ffffff;
+    margin-bottom: 4px;
+  }
+  
+  .notificationMessage {
+    font-size: 0.95rem;
+    color: #dddddd;
+    line-height: 1.3;
+  }
+  
+  /* Time label */
+  .notificationTime {
+    font-size: 0.85rem;
+    color: #bbbbbb;
+    white-space: nowrap;
+  }
+  
+  

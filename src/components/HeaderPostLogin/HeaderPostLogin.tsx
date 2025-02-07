@@ -1,14 +1,40 @@
-import React from 'react';
+// HeaderPostLogin.tsx
+import React, { useState, useRef, useEffect } from 'react';
 import { Logo } from '../Logo/Logo';
 import { Wallet } from './Wallet';
 import { useSidebarContext } from '../../context/SidebarContext/useSidebarContext';
 import headerStyles from './HeaderPostLogin.module.css';
+import { NotificationDropdown, Notification } from './NotificationDropdown';
 
 interface PostRegisterHeaderProps {
   toggleChat: () => void;
   isChatOpen: boolean;
-  onWalletClick: () => void; // New prop to handle wallet button clicks
+  onWalletClick: () => void;
 }
+
+const notificationsSample: Notification[] = [
+  {
+    id: 1,
+    title: 'Welcome',
+    message: 'Thanks for joining us!',
+    time: 'Just now',
+    isRead: false,
+  },
+  {
+    id: 2,
+    title: 'Update',
+    message: 'New features are available.',
+    time: '5 mins ago',
+    isRead: true,
+  },
+  {
+    id: 3,
+    title: 'Reminder',
+    message: 'Your subscription renews soon.',
+    time: '1 hr ago',
+    isRead: false,
+  },
+];
 
 export const PostRegisterHeader: React.FC<PostRegisterHeaderProps> = ({
   toggleChat,
@@ -16,6 +42,19 @@ export const PostRegisterHeader: React.FC<PostRegisterHeaderProps> = ({
   onWalletClick,
 }) => {
   const { isOpen } = useSidebarContext();
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [anchorRect, setAnchorRect] = useState<DOMRect | null>(null);
+  const notificationButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (showNotifications && notificationButtonRef.current) {
+      setAnchorRect(notificationButtonRef.current.getBoundingClientRect());
+    }
+  }, [showNotifications]);
+
+  const handleClearAll = () => {
+    console.log('Clear all notifications');
+  };
 
   return (
     <header
@@ -30,23 +69,31 @@ export const PostRegisterHeader: React.FC<PostRegisterHeaderProps> = ({
             <Logo />
           </div>
           <div className={headerStyles.walletCenter}>
-            {/* Pass the onWalletClick handler to Wallet */}
             <Wallet onWalletButtonClick={onWalletClick} />
           </div>
           <div className={headerStyles.iconsContainer}>
-            {/* Notification Icon */}
-            <button
-              className={headerStyles.iconButton}
-              onClick={() => console.log('Notifications clicked')}
-              aria-label="Notifications"
-            >
-              <img
-                src="/images/bellVector.svg"
-                alt="Notifications"
-                className={headerStyles.icon}
-              />
-            </button>
-
+            {/* Notifications Icon with Dropdown rendered via Portal */}
+            <div>
+              <button
+                ref={notificationButtonRef}
+                className={headerStyles.iconButton}
+                onClick={() => setShowNotifications((prev) => !prev)}
+                aria-label="Notifications"
+              >
+                <img
+                  src="/images/bellVector.svg"
+                  alt="Notifications"
+                  className={headerStyles.icon}
+                />
+              </button>
+              {showNotifications && (
+                <NotificationDropdown
+                  notifications={notificationsSample}
+                  anchorRect={anchorRect}
+                  onClearAll={handleClearAll}
+                />
+              )}
+            </div>
             {/* Profile Icon */}
             <button
               className={headerStyles.iconButton}
@@ -59,7 +106,6 @@ export const PostRegisterHeader: React.FC<PostRegisterHeaderProps> = ({
                 className={headerStyles.icon}
               />
             </button>
-
             {/* Chat Toggle Button */}
             <button
               className={headerStyles.iconButton}

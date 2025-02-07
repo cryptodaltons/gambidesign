@@ -1,6 +1,12 @@
-.buttonContainer {
+:root {
+    /* Transition settings centralized for easy tweaks */
+    --transition-duration: 0.4s;
+    --transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Container styling */
+  .buttonContainer {
     display: flex;
-    /* Allow items to move to next line if not enough space */
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
@@ -9,57 +15,106 @@
     background: transparent;
     border-radius: 16px;
     max-width: 1750px;
-    /* overflow: hidden;  <-- if you're okay with the container growing/shrinking, 
-                             you can remove or adjust this */
     margin: 0 auto;
-}
-
-/* Both buttons should be able to shrink and wrap if needed */
-.leftButton, .rightButton {
-    /* flex: 1 1 0 => 
-         - The first '1' means allow to grow 
-         - The second '1' means allow to shrink 
-         - '0' is the basis (we’ll rely on content + width constraints) */
+  }
+  
+  /* Shared styling for both buttons */
+  .leftButton,
+  .rightButton {
     flex: 1 1 0;
-    
-    /* Provide a smaller min-width so they can shrink enough 
-       when sidebars are open. Adjust as needed. */
     min-width: 300px;
-    max-width: 700px; /* If you want an upper bound. Adjust as you see fit. */
-    
+    max-width: 700px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
     padding: 24px;
+    text-decoration: none;
     text-align: left;
     border-radius: 12px;
-    position: relative;
     color: #ffffff;
     height: 150px;
-}
-
-.leftButton {
+    position: relative;
+    background-size: 200% auto;
+    background-position: left center;
+    transition: transform var(--transition-duration) var(--transition-ease),
+                box-shadow var(--transition-duration) var(--transition-ease),
+                background-position 0.5s var(--transition-ease);
+    user-select: none;
+    overflow: hidden; /* Contain the shimmer effect */
+  }
+  
+  /* Original gradients preserved */
+  .leftButton {
     background: linear-gradient(90deg, #1b4fdb 0%, #11275c 100%);
-}
-
-.rightButton {
+  }
+  
+  .rightButton {
     background: linear-gradient(90deg, #77380b 0%, #f59e0b 100%);
-}
-
-.buttonTitle {
+  }
+  
+  /* Shimmer effect via a pseudo-element */
+  .leftButton::before,
+  .rightButton::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transform: skewX(-25deg);
+    transition: left 0.75s var(--transition-ease), opacity 0.75s var(--transition-ease);
+    pointer-events: none;
+    opacity: 0;  /* Hide shimmer initially */
+  }
+  
+  .leftButton:hover::before,
+  .rightButton:hover::before {
+    left: 100%;
+    opacity: 1;  /* Reveal shimmer on hover */
+  }
+  
+  /* Enhanced hover: more lift, scale, and glow */
+  .leftButton:hover,
+  .rightButton:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4);
+    background-position: right center;
+  }
+  
+  /* Active state reverts transform for a tactile press */
+  .leftButton:active,
+  .rightButton:active {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Enhanced focus state for accessibility */
+  .leftButton:focus-visible,
+  .rightButton:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.9), 0 0 10px rgba(255, 255, 255, 0.7);
+  }
+  
+  /* Title styling */
+  .buttonTitle {
     font-size: 28px;
     font-weight: 700;
     margin: 0;
-}
-
-.buttonSubtitle {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Subtitle styling */
+  .buttonSubtitle {
     font-size: 16px;
-    margin: 8px 0;
+    margin: 8px 0 0;
     color: #ffffff;
-}
-
-.buttonTag {
+  }
+  
+  /* Tag styling */
+  .buttonTag {
     display: inline-block;
     background: #1a73e8;
     color: #ffffff;
@@ -67,10 +122,11 @@
     font-size: 14px;
     font-weight: 600;
     border-radius: 4px;
-    margin-top: 4px;
-}
-
-.divider {
+    margin-left: 12px;
+  }
+  
+  /* Divider with an eye-catching pulse and gentle rotation */
+  .divider {
     width: 72px;
     height: 72px;
     display: flex;
@@ -81,4 +137,40 @@
     font-size: 28px;
     color: #07e942;
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
-}
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1) rotate(0deg);
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
+    }
+    50% {
+      transform: scale(1.1) rotate(5deg);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+    }
+    100% {
+      transform: scale(1) rotate(0deg);
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
+    }
+  }
+  
+  /* Responsive: Hide divider on very small screens */
+  @media (max-width: 480px) {
+    .divider {
+      display: none;
+    }
+  }
+  
+  /* Respect users’ reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .leftButton,
+    .rightButton,
+    .divider,
+    .leftButton::before,
+    .rightButton::before {
+      transition: none;
+      animation: none;
+    }
+  }
+  
