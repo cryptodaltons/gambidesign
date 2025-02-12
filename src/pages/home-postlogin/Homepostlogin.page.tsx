@@ -5,7 +5,10 @@ import { BetDisplay } from '../../components/BetRows/BetDisplay';
 import { PostBetDisplay } from '../../components/PostBetRows/PostBetDisplay';
 import { LatestBigWins } from '../../components/LatestBigWins/LatestBigWins';
 import { ButtonStructure } from '../../components/ButtonStructure/ButtonStructure';
-import { SlotSection } from '../../components/SlotSection/SlotSection'; // Import the SlotSection component
+import { SlotSection } from '../../components/SlotSection/SlotSection'; // Existing Popular Games section
+import { SportsSection } from '../../components/SportsSection/SportsSection'; // New Popular Matches section
+import { RacesRafflesSection } from '../../components/RacesRafflesSection/RacesRafflesSection';
+
 
 export const PostLoginHome = () => {
   const providers = [
@@ -23,28 +26,39 @@ export const PostLoginHome = () => {
 
   return (
     <GridLayout>
-
-
       {/* Welcome Section */}
       <div className="col-span-12 mt-8">
         <DashboardCard
-          userName="JohnDoe" // Replace dynamically with logged-in user info
-          rewardProgress={65} // Example reward progress
+          userName="JohnDoe"
+          rewardProgress={65}
           tier="Platinum I"
-          nextTier='Platinum II' // Example tier
+          nextTier="Platinum II"
         />
       </div>
-      
-           {/* Button Structure Section */}
-           <div className="col-span-12 mt-8">
-        <ButtonStructure /> {/* Added the ButtonStructure component */}
-      </div>
-              {/* Popular Games Section */}
+
+      {/* Button Structure Section */}
       <div className="col-span-12 mt-8">
-        <SlotSection /> {/* Added the SlotSection component */}
-      </div> 
-        
-      {/* Bet Display */}
+        <ButtonStructure />
+      </div>
+
+      {/* Popular Games Section */}
+      <div className="col-span-12 mt-8">
+        <SlotSection />
+      </div>
+
+      {/* Popular Matches Sports Section */}
+      <div className="col-span-12 mt-8">
+        <SportsSection />
+      </div>
+
+      {/* Races & Raffles Section */}
+            <div className="col-span-12 mt-8">
+        <RacesRafflesSection />
+      </div>
+
+
+
+      {/* Bet Display Section */}
       <div className="col-span-12 mt-12">
         <PostBetDisplay />
       </div>

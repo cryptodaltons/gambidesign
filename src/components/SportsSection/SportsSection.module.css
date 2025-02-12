@@ -1,0 +1,438 @@
+/**************************************************************
+ * Root Variables
+ **************************************************************/
+ :root {
+  /* Color Palette */
+  --color-background-dark: #192132;
+  --color-background-card: #1f2937;
+  --color-background-light: #2a3348;
+  --color-primary: #07e942;
+  --color-primary-hover: #09862b;
+  --color-white: #ffffff;
+  --color-grey-light: #9ca3af;
+  --color-grey-medium: #6b7280;
+  --color-red: #ff0000;
+  --color-shadow: rgba(0, 0, 0, 0.5);
+
+  /* Spacing, Sizing, etc. */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+
+  /* Transitions, etc. */
+  --transition-base: 0.3s ease;
+  --transition-fast: 0.15s ease;
+}
+
+/**************************************************************
+ * Container for the entire SportsSection
+ **************************************************************/
+.sportsContainer {
+  padding: var(--spacing-lg);
+  background: var(--color-background-dark);
+  border-radius: var(--border-radius-lg);
+  position: relative;
+  width: 100%;
+  max-width: 1750px;
+  margin: 0 auto;
+}
+
+/**************************************************************
+ * HEADER: Title, Control Buttons, etc.
+ **************************************************************/
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+}
+
+/* Optional icon styling if you decide to use an icon */
+.headerLeft img {
+  width: 32px;
+  height: 32px;
+  margin-right: var(--spacing-sm);
+}
+
+.sectionTitle {
+  font-size: 24px;
+  color: var(--color-white);
+}
+
+/* "View All" button & other header buttons */
+.headerControls {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.viewAllButton {
+  background: var(--color-primary);
+  color: var(--color-white);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  border-radius: var(--border-radius-md);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition-base);
+}
+
+.viewAllButton:hover {
+  background: var(--color-primary-hover);
+}
+
+/* Example toggle switch for filtering completed matches or any other feature */
+.toggleContainer {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.toggleLabel {
+  font-size: 14px;
+  color: var(--color-white);
+}
+
+/* A simple checkbox style for a toggle */
+input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/**************************************************************
+ * SLIDER: The horizontal scroll area for match cards
+ **************************************************************/
+.sliderWrapper {
+  position: relative;
+}
+
+/* Arrows for manual horizontal navigation (in addition to drag) */
+.navArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  background-color: var(--color-background-dark);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-sm);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.navArrow:hover {
+  background-color: var(--color-background-light);
+}
+
+.arrowLeft {
+  left: var(--spacing-sm);
+}
+
+.arrowRight {
+  right: var(--spacing-sm);
+}
+
+/* The container that holds the slider track */
+.sliderContainer {
+  display: flex;
+  align-items: center;
+  overflow: hidden; /* hidden scrollbars */
+  user-select: none; /* prevent text highlight while dragging */
+  cursor: grab;
+  margin: var(--spacing-md) 0;
+}
+
+.sliderContainer:active {
+  cursor: grabbing;
+}
+
+/* The slider track that contains the .matchCard elements */
+.slider {
+  display: flex;
+  gap: var(--spacing-md);
+  transition: transform 0.5s ease;
+  flex-wrap: nowrap;
+}
+
+/**************************************************************
+ * INDIVIDUAL MATCH CARD
+ **************************************************************/
+.matchCard {
+  flex: 0 0 auto;
+  width: 320px; /* slightly bigger width for more content */
+  background: var(--color-background-card);
+  border-radius: var(--border-radius-md);
+  position: relative;
+  color: var(--color-white);
+  padding: var(--spacing-md);
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: box-shadow var(--transition-base), border var(--transition-base);
+  border: 2px solid transparent; /* keep consistent size on hover */
+}
+
+.matchCard:hover {
+  box-shadow: 0px 4px 12px var(--color-shadow);
+  border: 2px solid var(--color-primary);
+}
+
+/* OPTIONAL "FAVORITE" or "LIKE" indicator at top-right corner */
+.favoriteIcon {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--color-grey-light);
+  transition: color var(--transition-fast);
+}
+
+.favoriteIcon:hover {
+  color: var(--color-primary);
+}
+
+/**************************************************************
+ * LIVE STATUS, WEATHER, ETC.
+ **************************************************************/
+.liveStatus {
+  position: absolute;
+  top: var(--spacing-md);
+  left: var(--spacing-md);
+  background: var(--color-red);
+  color: var(--color-white);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.weather {
+  position: absolute;
+  top: var(--spacing-md);
+  right: calc(var(--spacing-md) + 32px); /* leave space for favorite icon */
+  background: rgba(255, 255, 255, 0.1);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  font-size: 12px;
+  text-align: center;
+}
+
+/**************************************************************
+ * CARD CONTENT: TEAMS, SCORE, TIMER, ODDS, ETC.
+ **************************************************************/
+.matchTeams {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: var(--spacing-xs);
+  margin-top: 40px; /* leaves room for the badges at the top */
+}
+
+.leagueInfo {
+  font-size: 14px;
+  color: var(--color-grey-light);
+  margin-bottom: var(--spacing-sm);
+}
+
+/* If the match is upcoming or in progress, show a countdown or progress bar */
+.matchTimer {
+  font-size: 14px;
+  color: var(--color-grey-light);
+  margin-bottom: var(--spacing-sm);
+}
+
+/* Optional progress bar for the match time (if live) */
+.progressBarContainer {
+  background: var(--color-background-light);
+  border-radius: var(--border-radius-sm);
+  height: 6px;
+  width: 100%;
+  margin-bottom: var(--spacing-sm);
+  overflow: hidden;
+}
+
+.progressBarFill {
+  background: var(--color-primary);
+  height: 100%;
+  width: 0%;
+  transition: width 1s linear; /* animate the progress */
+}
+
+/* Score section */
+.score {
+  font-size: 16px;
+  margin-bottom: var(--spacing-sm);
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Live score highlight or upcoming text */
+.scoreValue {
+  font-weight: bold;
+}
+
+.upcomingText {
+  color: var(--color-grey-light);
+  font-style: italic;
+}
+
+/**************************************************************
+ * ODDS SECTION
+ **************************************************************/
+.odds {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.oddsItem {
+  flex: 1;
+  text-align: center;
+  background: var(--color-background-light);
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-xs) 0;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.oddsItem:hover {
+  background: var(--color-background-dark);
+}
+
+.oddsLabel {
+  font-size: 12px;
+  color: var(--color-grey-light);
+}
+
+.oddsValue {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--color-white);
+}
+
+/**************************************************************
+ * BET BUTTON / STATUS
+ **************************************************************/
+.betStatus {
+  text-align: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.betButton {
+  background: var(--color-primary);
+  color: var(--color-white);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  border-radius: var(--border-radius-md);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition-base);
+  width: 100%;
+}
+
+.betButton:hover {
+  background: var(--color-primary-hover);
+}
+
+.placedBet {
+  font-size: 14px;
+  color: var(--color-primary);
+  font-weight: bold;
+}
+
+/**************************************************************
+ * EXTRA: COLLAPSIBLE MATCH STATS / DETAILS
+ **************************************************************/
+.detailsToggleButton {
+  display: block;
+  background: var(--color-background-light);
+  color: var(--color-white);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  font-size: 14px;
+  cursor: pointer;
+  margin: 0 auto;
+  transition: background var(--transition-fast);
+}
+
+.detailsToggleButton:hover {
+  background: var(--color-background-dark);
+}
+
+.extraDetails {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--transition-base);
+}
+
+.extraDetails.open {
+  max-height: 500px; /* big enough to display the content */
+}
+
+.extraDetailsContent {
+  margin-top: var(--spacing-sm);
+  background-color: var(--color-background-light);
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-md);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* Example styling for stats table */
+.statsTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--spacing-sm);
+}
+
+.statsTable th,
+.statsTable td {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  text-align: left;
+  border-bottom: 1px solid var(--color-background-dark);
+}
+
+.statsTable th {
+  color: var(--color-grey-light);
+  font-weight: normal;
+}
+
+.statsTable tr:hover {
+  background: var(--color-background-dark);
+}
+
+/**************************************************************
+ * RESPONSIVE DESIGN
+ **************************************************************/
+@media (max-width: 768px) {
+  .matchCard {
+    width: 280px;
+  }
+  .sectionTitle {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .matchCard {
+    width: 240px;
+  }
+  .sectionTitle {
+    font-size: 18px;
+  }
+}

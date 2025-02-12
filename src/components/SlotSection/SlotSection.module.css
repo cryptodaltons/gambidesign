@@ -1,168 +1,231 @@
+/***********************************************************
+ * Root Variables
+ ***********************************************************/
+ :root {
+  --color-bg-dark: #192132;
+  --color-bg-card: #1f2937;
+  --color-primary: #07e942;
+  --color-primary-hover: #09862b;
+  --color-white: #ffffff;
+  --color-grey-light: #9ca3af;
+  --color-gold: #f59e0b;
+  --color-error: #ff3f26; 
+
+  --transition-base: 0.3s ease;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+}
+
+/***********************************************************
+ * Main Container
+ ***********************************************************/
 .slotContainer {
-  padding: 24px;
-  background: #192132; /* Dark background for the section */
+  padding: var(--spacing-lg);
+  background: var(--color-bg-dark);
   border-radius: 12px;
   position: relative;
   width: 100%;
   max-width: 1750px;
-  margin: 0 auto; /* Center the container */
+  margin: 0 auto;
+  color: var(--color-white);
+  box-sizing: border-box;
 }
 
+/***********************************************************
+ * Header
+ ***********************************************************/
 .headerContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: var(--spacing-md);
 }
 
 .sectionTitle {
   font-size: 24px;
-  color: #ffffff;
+  color: var(--color-white);
+  font-weight: bold;
 }
 
 .viewAllButton {
-  background: #07e942;
-  color: #ffffff;
-  padding: 8px 16px;
+  background: var(--color-primary);
+  color: var(--color-white);
+  padding: var(--spacing-sm) calc(var(--spacing-sm)*2);
   border: none;
   border-radius: 8px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background var(--transition-base);
 }
 
 .viewAllButton:hover {
-  background: #09862b;
+  background: var(--color-primary-hover);
 }
 
+/***********************************************************
+ * Slot Grid Container
+ * We changed the overflow so cards can expand outside
+ ***********************************************************/
 .slotGridContainer {
   position: relative;
   display: flex;
   align-items: center;
   width: 100%;
-  overflow: hidden; /* Hide scrollbars */
-  user-select: none; /* Prevents text selection during drag */
+  /* We hide horizontal scrollbar but allow vertical overflow 
+     so the 3D hover effect isn't clipped. */
+  overflow-x: hidden;
+  overflow-y: visible;
+  user-select: none; 
+  margin-bottom: var(--spacing-lg);
 }
 
+/***********************************************************
+ * Slot Grid
+ ***********************************************************/
 .slotGrid {
   display: flex;
   gap: 20px;
-  transition: transform 0.5s ease; /* Smooth sliding effect */
+  transition: transform 0.5s ease;
   justify-content: flex-start;
-  flex-wrap: nowrap; /* Prevent wrapping to the next row */
+  flex-wrap: nowrap;
 }
 
+/***********************************************************
+ * Slot Card
+ ***********************************************************/
 .slotCard {
-  flex: 0 0 auto; /* Prevent resizing */
-  width: 170px; /* Fixed card width */
-  height: 225px; /* Fixed card height */
-  background: #1f2937;
+  flex: 0 0 auto;
+  width: 180px;
+  height: 260px;
+  background: var(--color-bg-card);
   border-radius: 8px;
   position: relative;
-  color: #ffffff;
+  color: var(--color-white);
   text-align: center;
   overflow: hidden;
   cursor: pointer;
-  /* box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4); */ /* Removed shadow */
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border var(--transition-base);
+  perspective: 600px;
 }
 
-.slotImage {
+/* Light green overlay that appears on hover */
+.slotCard::after {
+  content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Ensures image fills the card */
-  z-index: 1;
-}
-
-.slotContent {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-  height: 100%;
-  padding: 12px;
-}
-
-.slotTitle {
-  display: none; /* Hides the slot title */
-}
-
-.slotProvider {
-  font-size: 13px;
-  color: #9ca3af;
-  display: none;
-}
-
-.exclusiveBadge {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  background: #f59e0b;
-  color: #ffffff;
-  padding: 4px 8px;
-  font-size: 12px; /* Slightly larger badge font */
-  border-radius: 4px;
-  font-weight: bold;
-  z-index: 3;
-}
-
-.highrtpBadge {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  background: #ff3f26;
-  color: #ffffff;
-  padding: 4px 8px;
-  font-size: 12px; /* Slightly larger badge font */
-  border-radius: 4px;
-  font-weight: bold;
-  z-index: 3;
-}
-
-.playButton {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 50px;
-  height: 50px;
-  z-index: 4;
+  inset: 0;
+  background: rgba(68, 255, 30, 0.178);
   opacity: 0;
-  transition: opacity 0.3s ease;
-  object-fit: contain; /* Ensures proper scaling */
-  background: #1a202e; /* Circle background matches slot background */
-  border: 2px solid #07e942; /* Adds a green stroke to the circle */
-  border-radius: 50%; /* Makes the play button circular */
-  padding: 5px; /* Adds spacing inside the circle */
+  transition: opacity var(--transition-base);
+  z-index: 2;
 }
 
-.slotCard:hover .playButton {
-  opacity: 1;
+/* Scale + shadow on hover */
+.slotCard:hover {
+  transform: scale(1.02) translateY(-3px);
+  box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.5);
+  border: 2px solid var(--color-primary);
+  z-index: 3; /* ensures the hovered card is above others */
 }
 
 .slotCard:hover::after {
   opacity: 1;
 }
 
-.slotCard:hover {
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5);
-  border: 2px solid #07e942; /* Added stroke on hover */
+/***********************************************************
+ * Slot Card Inner (3D tilt effect)
+ ***********************************************************/
+.slotInner {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform var(--transition-base);
 }
 
-.slotCard::after {
-  content: '';
+/* Tilt effect on hover (slight rotation on Y-axis) */
+.slotCard:hover .slotInner {
+  transform: rotateY(5deg);
+}
+
+/***********************************************************
+ * Slot Image
+ ***********************************************************/
+.slotImage {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(68, 255, 30, 0.178);
+  object-fit: cover; 
+  z-index: 1;
+}
+
+/***********************************************************
+ * Number Label
+ ***********************************************************/
+.slotNumber {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--color-white);
+  z-index: 5;
+}
+
+/***********************************************************
+ * Badges: Exclusive / High RTP
+ ***********************************************************/
+.exclusiveBadge {
+  position: absolute;
+  top: 48px;  /* slightly below the number label */
+  left: 16px;
+  background: var(--color-gold);
+  color: var(--color-white);
+  padding: 4px 8px;
+  font-size: 12px;
+  border-radius: 4px;
+  font-weight: bold;
+  z-index: 5; 
+}
+
+.highrtpBadge {
+  position: absolute;
+  top: 48px;
+  right: 16px;
+  background: var(--color-error);
+  color: var(--color-white);
+  padding: 4px 8px;
+  font-size: 12px;
+  border-radius: 4px;
+  font-weight: bold;
+  z-index: 5;
+}
+
+/***********************************************************
+ * Play Button (Center on hover)
+ ***********************************************************/
+.playButton {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 52px;
+  height: 52px;
+  z-index: 4;
   opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 2;
+  transition: opacity var(--transition-base);
+  object-fit: contain;
+  background: #1a202e; 
+  border: 2px solid var(--color-primary);
+  border-radius: 50%;
+  padding: 5px;
+}
+
+.slotCard:hover .playButton {
+  opacity: 1;
 }

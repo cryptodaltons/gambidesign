@@ -7,16 +7,24 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@babylonjs/core": "^7.48.3",
     "@heroicons/react": "^2.2.0",
-    "react": "^18.0.0",
+    "@react-three/drei": "^9.121.4",
+    "@react-three/fiber": "^8.17.14",
+    "babylonjs": "^7.48.3",
+    "babylonjs-loaders": "^7.48.3",
+    "react": "^18.3.1",
+    "react-babylonjs": "^3.2.2",
     "react-dom": "^18.0.0",
     "react-fast-marquee": "^1.6.5",
     "react-icons": "^5.4.0",
-    "react-router-dom": "^7.1.1"
+    "react-router-dom": "^7.1.1",
+    "three": "^0.173.0"
   },
   "devDependencies": {
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
+    "@types/three": "^0.173.0",
     "@vitejs/plugin-react": "^4.0.0",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",

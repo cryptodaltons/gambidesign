@@ -8,6 +8,7 @@
     "jsx": "react-jsx",
     "esModuleInterop": true,
     "skipLibCheck": true,
+    "types": ["@react-three/fiber", "three"],
     "forceConsistentCasingInFileNames": true
   },
   "include": ["src"]
