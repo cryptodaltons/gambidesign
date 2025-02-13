@@ -31,11 +31,13 @@ export const SlotSection: React.FC = () => {
   const handleMouseMovePopular = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!isDraggingPopular || !popularSliderRef.current) return;
     const x = e.pageX - popularSliderRef.current.offsetLeft;
-    const walk = (x - startXPopular) * 1.5; 
+    const walk = (x - startXPopular) * 1.5;
     popularSliderRef.current.scrollLeft = scrollLeftPopular - walk;
   };
 
-  const handleMouseUpLeavePopular = () => setIsDraggingPopular(false);
+  const handleMouseUpLeavePopular = () => {
+    setIsDraggingPopular(false);
+  };
 
   /************************************************************
    * DRAG HANDLERS FOR NEW RELEASES
@@ -50,11 +52,13 @@ export const SlotSection: React.FC = () => {
   const handleMouseMoveNewReleases = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!isDraggingNewReleases || !newReleasesSliderRef.current) return;
     const x = e.pageX - newReleasesSliderRef.current.offsetLeft;
-    const walk = (x - startXNewReleases) * 1.5; 
+    const walk = (x - startXNewReleases) * 1.5;
     newReleasesSliderRef.current.scrollLeft = scrollLeftNewReleases - walk;
   };
 
-  const handleMouseUpLeaveNewReleases = () => setIsDraggingNewReleases(false);
+  const handleMouseUpLeaveNewReleases = () => {
+    setIsDraggingNewReleases(false);
+  };
 
   /************************************************************
    * SLOT DATA
@@ -97,9 +101,6 @@ export const SlotSection: React.FC = () => {
     { title: "Big Bass Bonanza", exclusive: false, highrtp: false, image: "/images/big-bass-bonanza.png" },
   ];
 
-  /************************************************************
-   * RENDER
-   ************************************************************/
   return (
     <div className={styles.slotContainer}>
 

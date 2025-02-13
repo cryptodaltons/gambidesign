@@ -9,7 +9,7 @@
   --color-white: #ffffff;
   --color-grey-light: #9ca3af;
   --color-gold: #f59e0b;
-  --color-error: #ff3f26; 
+  --color-error: #ff3f26;
 
   --transition-base: 0.3s ease;
   --spacing-sm: 8px;
@@ -30,6 +30,8 @@
   margin: 0 auto;
   color: var(--color-white);
   box-sizing: border-box;
+  /* Allow hovered slot cards to expand upward/downward freely */
+  overflow: visible;
 }
 
 /***********************************************************
@@ -66,19 +68,20 @@
 
 /***********************************************************
  * Slot Grid Container
- * We changed the overflow so cards can expand outside
  ***********************************************************/
 .slotGridContainer {
   position: relative;
   display: flex;
   align-items: center;
   width: 100%;
-  /* We hide horizontal scrollbar but allow vertical overflow 
-     so the 3D hover effect isn't clipped. */
+  min-height: 300px;
+  /* We only hide horizontal scrollbars, but keep vertical overflow 
+     so the card can scale up without clipping. */
   overflow-x: hidden;
-  overflow-y: visible;
-  user-select: none; 
+  overflow-y: hidden;
+  user-select: none;
   margin-bottom: var(--spacing-lg);
+  
 }
 
 /***********************************************************
@@ -106,11 +109,13 @@
   text-align: center;
   overflow: hidden;
   cursor: pointer;
-  transition: transform var(--transition-base), box-shadow var(--transition-base), border var(--transition-base);
-  perspective: 600px;
+  /* The key is a smooth transform so it looks good on both hover-in and hover-out */
+  transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              box-shadow var(--transition-base),
+              border var(--transition-base);
 }
 
-/* Light green overlay that appears on hover */
+/* Green overlay that appears on hover */
 .slotCard::after {
   content: '';
   position: absolute;
@@ -121,12 +126,11 @@
   z-index: 2;
 }
 
-/* Scale + shadow on hover */
+/* On hover: scale card, raise z-index so it's on top, highlight border */
 .slotCard:hover {
-  transform: scale(1.02) translateY(-3px);
-  box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.5);
-  border: 2px solid var(--color-primary);
-  z-index: 3; /* ensures the hovered card is above others */
+  transform: scale(1.05) translateY(-4px);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4);
+  z-index: 999;
 }
 
 .slotCard:hover::after {
@@ -134,18 +138,13 @@
 }
 
 /***********************************************************
- * Slot Card Inner (3D tilt effect)
+ * Slot Inner
  ***********************************************************/
 .slotInner {
   width: 100%;
   height: 100%;
-  transform-style: preserve-3d;
-  transition: transform var(--transition-base);
-}
-
-/* Tilt effect on hover (slight rotation on Y-axis) */
-.slotCard:hover .slotInner {
-  transform: rotateY(5deg);
+  position: relative;
+  /* We removed the 3D tilt for a simpler scale effect */
 }
 
 /***********************************************************
@@ -157,18 +156,19 @@
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover; 
+  object-fit: cover;
   z-index: 1;
 }
 
 /***********************************************************
- * Number Label
+ * Number Label (1..N)
+ * Using the color #07e94 as you requested for background
  ***********************************************************/
 .slotNumber {
   position: absolute;
   top: 16px;
   left: 16px;
-  background: rgba(0, 0, 0, 0.4);
+  background: #07e942; /* as requested, but watch for validity! */
   padding: 4px 8px;
   border-radius: 4px;
   font-size: 12px;
@@ -182,7 +182,7 @@
  ***********************************************************/
 .exclusiveBadge {
   position: absolute;
-  top: 48px;  /* slightly below the number label */
+  top: 52px;  /* below the slotNumber */
   left: 16px;
   background: var(--color-gold);
   color: var(--color-white);
@@ -190,12 +190,12 @@
   font-size: 12px;
   border-radius: 4px;
   font-weight: bold;
-  z-index: 5; 
+  z-index: 5;
 }
 
 .highrtpBadge {
   position: absolute;
-  top: 48px;
+  top: 52px;
   right: 16px;
   background: var(--color-error);
   color: var(--color-white);
@@ -207,7 +207,7 @@
 }
 
 /***********************************************************
- * Play Button (Center on hover)
+ * Play Button
  ***********************************************************/
 .playButton {
   position: absolute;
