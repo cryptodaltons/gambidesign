@@ -1,41 +1,65 @@
 /***********************************************************
- * Root Variables
+ * GLOBAL VARIABLES
  ***********************************************************/
- :root {
-  --color-bg-dark: #192132;
-  --color-bg-card: #1f2937;
-  --color-primary: #07e942;
-  --color-primary-hover: #09862b;
+:root {
+  --color-bg-dark: #192132;       /* Main background */
+  --color-bg-card: #1f2937;       /* Slot card background */
+  --color-primary: #07e942;       /* Primary color (e.g. borders, highlights) */
+  --color-primary-hover: #09862b; /* Hover for primary color */
   --color-white: #ffffff;
   --color-grey-light: #9ca3af;
-  --color-gold: #f59e0b;
-  --color-error: #ff3f26;
+  --color-gold: #f59e0b;          /* For "Exclusive" badge */
+  --color-error: #ff3f26;         /* For "High RTP" badge */
 
-  --transition-base: 0.3s ease;
+  --transition-base: 0.3s ease;   /* Default transition ease */
   --spacing-sm: 8px;
   --spacing-md: 16px;
   --spacing-lg: 24px;
+  --spacing-xl: 36px;
+
+  /* Card & Hover Animations */
+  --card-3d-angle: 4deg;         /* Slight rotation for 3D effect */
+  --card-scale: 1.06;            /* Scale card on hover */
 }
 
 /***********************************************************
- * Main Container
+ * RESPONSIVE BREAKPOINTS
+ ***********************************************************/
+@media (max-width: 768px) {
+  :root {
+    /* Slightly smaller spacing, etc. for mobile */
+    --spacing-lg: 16px;
+    --spacing-xl: 24px;
+    --card-scale: 1.04;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --spacing-md: 12px;
+    --spacing-lg: 14px;
+    --spacing-xl: 20px;
+    --card-scale: 1.03;
+  }
+}
+
+/***********************************************************
+ * SLOT SECTION CONTAINER
  ***********************************************************/
 .slotContainer {
   padding: var(--spacing-lg);
   background: var(--color-bg-dark);
   border-radius: 12px;
-  position: relative;
-  width: 100%;
-  max-width: 1750px;
+  max-width: 1800px;
   margin: 0 auto;
-  color: var(--color-white);
   box-sizing: border-box;
-  /* Allow hovered slot cards to expand upward/downward freely */
+  color: var(--color-white);
+  /* Allow hovered slot cards to extend outside container */
   overflow: visible;
 }
 
 /***********************************************************
- * Header
+ * HEADER
  ***********************************************************/
 .headerContainer {
   display: flex;
@@ -46,14 +70,15 @@
 
 .sectionTitle {
   font-size: 24px;
+  font-weight: 700;
+  margin: 0;
   color: var(--color-white);
-  font-weight: bold;
 }
 
 .viewAllButton {
   background: var(--color-primary);
   color: var(--color-white);
-  padding: var(--spacing-sm) calc(var(--spacing-sm)*2);
+  padding: var(--spacing-sm) calc(var(--spacing-sm) * 2);
   border: none;
   border-radius: 8px;
   font-size: 14px;
@@ -67,7 +92,7 @@
 }
 
 /***********************************************************
- * Slot Grid Container
+ * SLOT GRID CONTAINER
  ***********************************************************/
 .slotGridContainer {
   position: relative;
@@ -75,28 +100,25 @@
   align-items: center;
   width: 100%;
   min-height: 300px;
-  /* We only hide horizontal scrollbars, but keep vertical overflow 
-     so the card can scale up without clipping. */
-  overflow-x: hidden;
-  overflow-y: hidden;
   user-select: none;
-  margin-bottom: var(--spacing-lg);
-  
+  /* Hide horizontal scrollbar, keep vertical for hover-scale */
+  overflow-x: hidden;
+  overflow-y: visible;
+  margin-bottom: var(--spacing-xl);
 }
 
 /***********************************************************
- * Slot Grid
+ * SLOT GRID (HORIZONTAL SCROLL)
  ***********************************************************/
 .slotGrid {
   display: flex;
-  gap: 20px;
-  transition: transform 0.5s ease;
-  justify-content: flex-start;
   flex-wrap: nowrap;
+  gap: 20px;
+  transition: transform 0.5s ease; /* smooth drag effect */
 }
 
 /***********************************************************
- * Slot Card
+ * SLOT CARD
  ***********************************************************/
 .slotCard {
   flex: 0 0 auto;
@@ -107,30 +129,30 @@
   position: relative;
   color: var(--color-white);
   text-align: center;
-  overflow: hidden;
+  /* For 3D transform we need preserve-3d on hover */
+  transform-style: preserve-3d;
   cursor: pointer;
-  /* The key is a smooth transform so it looks good on both hover-in and hover-out */
-  transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1), 
-              box-shadow var(--transition-base),
-              border var(--transition-base);
+  transition:
+    transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1),
+    box-shadow var(--transition-base);
 }
 
-/* Green overlay that appears on hover */
+/* Hover: Slight 3D tilt + scale + shadow */
+.slotCard:hover {
+  transform: rotateX(var(--card-3d-angle)) rotateY(var(--card-3d-angle)) scale(var(--card-scale));
+  box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+  z-index: 10; /* keep on top when hovered */
+}
+
+/* Subtle green overlay on hover */
 .slotCard::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(68, 255, 30, 0.178);
+  background: rgba(7, 233, 66, 0.15);
   opacity: 0;
   transition: opacity var(--transition-base);
   z-index: 2;
-}
-
-/* On hover: scale card, raise z-index so it's on top, highlight border */
-.slotCard:hover {
-  transform: scale(1.05) translateY(-4px);
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4);
-  z-index: 999;
 }
 
 .slotCard:hover::after {
@@ -138,17 +160,16 @@
 }
 
 /***********************************************************
- * Slot Inner
+ * SLOT INNER
  ***********************************************************/
 .slotInner {
+  position: relative;
   width: 100%;
   height: 100%;
-  position: relative;
-  /* We removed the 3D tilt for a simpler scale effect */
 }
 
 /***********************************************************
- * Slot Image
+ * SLOT IMAGE (BACKGROUND)
  ***********************************************************/
 .slotImage {
   position: absolute;
@@ -161,53 +182,75 @@
 }
 
 /***********************************************************
- * Number Label (1..N)
- * Using the color #07e94 as you requested for background
+ * TOP BADGES
+ * -> Number badge on top-left
+ * -> Exclusive + High RTP on top-right
  ***********************************************************/
-.slotNumber {
+
+/* A container that spans the card's width, 
+   so we can place left & right groups easily */
+.topBadgesContainer {
   position: absolute;
-  top: 16px;
-  left: 16px;
-  background: #07e942; /* as requested, but watch for validity! */
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 12px;
-  font-weight: bold;
-  color: var(--color-white);
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none; /* let mouse events pass to card */
   z-index: 5;
 }
 
+/* Top-left slot number */
+.leftBadgeWrapper {
+  display: flex;
+  align-items: flex-start;
+  /* single item, but let's keep it consistent with flex */
+}
+
+/* The cluster of top-right badges (Exclusive + High RTP),
+   stacked vertically. */
+.rightBadgesWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
 /***********************************************************
- * Badges: Exclusive / High RTP
+ * INDIVIDUAL BADGES
  ***********************************************************/
+.slotNumber {
+  background: var(--color-primary);
+  color: var(--color-white);
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 4px;
+  pointer-events: auto;
+}
+
 .exclusiveBadge {
-  position: absolute;
-  top: 52px;  /* below the slotNumber */
-  left: 16px;
   background: var(--color-gold);
   color: var(--color-white);
   padding: 4px 8px;
   font-size: 12px;
+  font-weight: 700;
   border-radius: 4px;
-  font-weight: bold;
-  z-index: 5;
+  pointer-events: auto;
 }
 
 .highrtpBadge {
-  position: absolute;
-  top: 52px;
-  right: 16px;
   background: var(--color-error);
   color: var(--color-white);
   padding: 4px 8px;
   font-size: 12px;
+  font-weight: 700;
   border-radius: 4px;
-  font-weight: bold;
-  z-index: 5;
+  pointer-events: auto;
 }
 
 /***********************************************************
- * Play Button
+ * PLAY BUTTON (Center on Hover)
  ***********************************************************/
 .playButton {
   position: absolute;
@@ -219,13 +262,38 @@
   z-index: 4;
   opacity: 0;
   transition: opacity var(--transition-base);
-  object-fit: contain;
   background: #1a202e; 
   border: 2px solid var(--color-primary);
   border-radius: 50%;
   padding: 5px;
+  object-fit: contain;
 }
 
 .slotCard:hover .playButton {
   opacity: 1;
+}
+
+/***********************************************************
+ * RESPONSIVE TWEAKS (example breakpoints)
+ ***********************************************************/
+/* Tweak slot card size on smaller screens for a better layout */
+@media (max-width: 992px) {
+  .slotCard {
+    width: 160px;
+    height: 230px;
+  }
+}
+
+@media (max-width: 768px) {
+  .slotCard {
+    width: 140px;
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .slotCard {
+    width: 120px;
+    height: 180px;
+  }
 }
